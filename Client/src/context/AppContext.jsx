@@ -16,6 +16,8 @@ export const AppProvider = ({ children }) => {
   const [isSearched, setIsSearched] = useState(false);
   const [jobs, setJobs] = useState([]);
 
+  const CURRENCY = import.meta.env.VITE_CURRENCY;
+
   useEffect(() => {
     const fetchJobs = async () => {
       setJobs(jobsData);
@@ -32,6 +34,7 @@ export const AppProvider = ({ children }) => {
     setIsSearched,
     jobs,
     setJobs,
+    CURRENCY,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
