@@ -5,6 +5,7 @@ import Navbar from "./components/client/Navbar";
 import Home from "./pages/client/Home/View/Home";
 import ApplyJob from "./pages/client/ApplyJob/View/ApplyJob";
 import Applications from "./pages/client/Applications/View/Applications";
+import Footer from "./components/client/Footer";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/apply-job/:id" element={<ApplyJob />} />
           <Route path="/applications" element={<Applications />} />
         </Routes>
+        <Footer />
       </div>
     </>
   );
