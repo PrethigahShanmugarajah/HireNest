@@ -81,26 +81,6 @@ export {
   amazon_logo,
 };
 
-export const JobCategories = [
-  "Programming",
-  "Data Science",
-  "Designing",
-  "Networking",
-  "Management",
-  "Marketing",
-  "Cybersecurity",
-];
-
-export const JobLocations = [
-  "Colombo",
-  "Washington",
-  "Galle",
-  "Jaffna",
-  "Gampaha",
-  "Negombo",
-  "Kurunegala",
-];
-
 // Sample data for Manage Jobs Page
 export const manageJobsData = [
   {
