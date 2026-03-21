@@ -2,9 +2,9 @@
 import { ToastContainer } from "react-toastify";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/client/Navbar";
-import Home from "./pages/Home/View/Home";
-import ApplyJob from "./pages/ApplyJob/View/ApplyJob";
-import Applications from "./pages/Applications/View/Applications";
+import Home from "./pages/client/Home/View/Home";
+import ApplyJob from "./pages/client/ApplyJob/View/ApplyJob";
+import Applications from "./pages/client/Applications/View/Applications";
 
 const App = () => {
   return (
