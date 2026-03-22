@@ -55,3 +55,9 @@ export const JobLocations = [
   "Trincomalee",
   "Vavuniya",
 ];
+
+export const JobLevel = [
+  "Beginner Level",
+  "Intermediate Level",
+  "Senior Level",
+];
