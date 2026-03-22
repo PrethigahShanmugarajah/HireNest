@@ -6,12 +6,14 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import * as Sentry from "@sentry/node";
 import { clerkWebhooks } from "./controllers/webhooks.js";
+import connectCloudinary from "./config/cloudinary.js";
 
 /* -------- INITIALIZE EXPRESS -------- */
 const app = express();
 
 /* -------- CONNECT TO DATABASE -------- */
-connectDB();
+await connectDB();
+await connectCloudinary();
 
 /* -------- MIDDLEWARE CONFIGURATION -------- */
 app.use(cors());
