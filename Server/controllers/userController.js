@@ -118,3 +118,50 @@ export const applyForJob = async (req, res) => {
     });
   }
 };
+
+/* -------- Get User Applied Applications -------- */
+export const getUserJobApplications = async (req, res) => {
+  try {
+    // const userId = req.auth.userId;
+    const { userId } = getAuth(req);
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication is required. Please log in again.",
+      });
+    }
+
+    const applications = await JobApplication.find({ userId })
+      .populate("companyId", "name email image")
+      .populate("jobId", "title description location category level salary")
+      .exec();
+
+    if (!applications) {
+      return res.status(404).json({
+        success: false,
+        message: "No job applications were found.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message:
+        applications.length === 0
+          ? "No job applications found."
+          : "Job applications fetched successfully.",
+      applications,
+    });
+  } catch (error) {
+    console.error(
+      "Get User Applied Applications Error:",
+      error?.stack || error?.message || error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while fetching job applications.",
+      error: `Get User Applied Applications Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
