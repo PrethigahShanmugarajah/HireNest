@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import * as Sentry from "@sentry/node";
 import { clerkWebhooks } from "./controllers/webhooks.js";
 import connectCloudinary from "./config/cloudinary.js";
+import { clerkMiddleware } from "@clerk/express";
 import companyRouter from "./routes/companyRouter.js";
 import jobRouter from "./routes/jobRouter.js";
 
@@ -21,6 +22,7 @@ await connectCloudinary();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(clerkMiddleware());
 
 /* -------- ROUTES -------- */
 app.get("/", (req, res) => res.send("API is Working!"));
