@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import generateToken from "../utils/generateToken.js";
 import Job from "../models/Job.js";
+import JobApplication from "../models/JobApplication.js";
 
 /* -------- Register Company -------- */
 export const registerCompany = async (req, res) => {
@@ -308,6 +309,39 @@ export const postJob = async (req, res) => {
       success: false,
       message: "An unexpected error occurred while posting the job.",
       error: `Post Job Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
+
+/* -------- Get Company Posted Jobs -------- */
+export const getCompanyPostedJobs = async (req, res) => {
+  try {
+    const companyId = req.company._id;
+    const jobs = await Job.find({ companyId });
+
+    const jobsData = await Promise.all(
+      jobs.map(async (job) => {
+        const applicants = await JobApplication.find({ jobId: job._id });
+        return { ...job.toObject(), applicants: applicants.length };
+      }),
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Company posted jobs fetched successfully.",
+      jobsData,
+    });
+  } catch (error) {
+    console.error(
+      "Get Company Posted Jobs Error:",
+      error?.stack || error?.message || error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message:
+        "An unexpected error occurred while fetching the company's posted jobs.",
+      error: `Get Company Posted Jobs Error: ${error?.stack || error?.message || error}`,
     });
   }
 };
