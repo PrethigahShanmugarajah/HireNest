@@ -135,3 +135,70 @@ export const registerCompany = async (req, res) => {
     });
   }
 };
+
+/* -------- Login Company -------- */
+export const loginCompany = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // if (!email || !password) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Email and password are required.",
+    //   });
+    // }
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required.",
+      });
+    }
+
+    if (!password) {
+      return res.status(400).json({
+        success: false,
+        message: "Password is required.",
+      });
+    }
+
+    const company = await Company.findOne({ email });
+
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: "No company found with the provided email.",
+      });
+    }
+
+    if (await bcrypt.compare(password, company.password)) {
+      return res.status(200).json({
+        success: true,
+        message: "Login successful.",
+        company: {
+          _id: company._id,
+          name: company.name,
+          email: company.email,
+          image: company.image,
+        },
+        token: generateToken(company._id),
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+  } catch (error) {
+    console.error(
+      "Login Company Error:",
+      error?.stack || error?.message || error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while logging in the company.",
+      error: `Login Company Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
