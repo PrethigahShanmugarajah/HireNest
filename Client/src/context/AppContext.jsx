@@ -15,6 +15,7 @@ export const AppProvider = ({ children }) => {
   });
   const [isSearched, setIsSearched] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
 
   const CURRENCY = import.meta.env.VITE_CURRENCY;
 
@@ -35,6 +36,8 @@ export const AppProvider = ({ children }) => {
     jobs,
     setJobs,
     CURRENCY,
+    showRecruiterLogin,
+    setShowRecruiterLogin,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
