@@ -7,7 +7,7 @@ import { useAppContext } from "../../context/AppContext";
 import { formatText } from "../../utils/helpers";
 
 const Navbar = () => {
-  const { navigate } = useAppContext();
+  const { navigate, setShowRecruiterLogin } = useAppContext();
 
   const { openSignIn } = useClerk();
   const { user } = useUser();
@@ -36,7 +36,15 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex gap-4 max-sm:text-xs">
-              <Button variant={"text"}>Recruiter Login</Button>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowRecruiterLogin(true);
+                }}
+                variant={"text"}
+              >
+                Recruiter Login
+              </Button>
 
               <Button
                 onClick={(e) => {
