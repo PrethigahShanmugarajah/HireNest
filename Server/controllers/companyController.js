@@ -328,7 +328,10 @@ export const getCompanyPostedJobs = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Company posted jobs fetched successfully.",
+      message:
+        jobsData.length === 0
+          ? "No job postings found."
+          : "Jobs fetched successfully.",
       jobsData,
     });
   } catch (error) {
