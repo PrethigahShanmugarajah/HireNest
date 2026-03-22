@@ -17,8 +17,11 @@ export const AppProvider = ({ children }) => {
   const [isSearched, setIsSearched] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
+  const [companyToken, setCompanyToken] = useState(null);
+  const [companyData, setCompanyData] = useState(null);
 
   const CURRENCY = import.meta.env.VITE_CURRENCY;
+  const backendUrl = import.meta.env.VITE_BASEURL;
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -40,6 +43,11 @@ export const AppProvider = ({ children }) => {
     CURRENCY,
     showRecruiterLogin,
     setShowRecruiterLogin,
+    companyToken,
+    setCompanyToken,
+    companyData,
+    setCompanyData,
+    backendUrl,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
