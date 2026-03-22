@@ -39,7 +39,7 @@ const Dashboard = () => {
 
       <div className="flex items-start">
         <Sidebar />
-        <div>
+        <div className="flex-1 w-full">
           <Outlet />
         </div>
       </div>
