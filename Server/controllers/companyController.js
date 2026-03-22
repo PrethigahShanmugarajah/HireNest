@@ -3,6 +3,7 @@ import Company from "../models/Company.js";
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import generateToken from "../utils/generateToken.js";
+import Job from "../models/Job.js";
 
 /* -------- Register Company -------- */
 export const registerCompany = async (req, res) => {
@@ -199,6 +200,90 @@ export const loginCompany = async (req, res) => {
       success: false,
       message: "An unexpected error occurred while logging in the company.",
       error: `Login Company Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
+
+/* -------- Post Job -------- */
+export const postJob = async (req, res) => {
+  try {
+    const { title, description, location, category, level, salary } = req.body;
+    const companyId = req.company._id;
+
+    // if (!title || !description || !location || !category || !level || !salary) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "All job details are required to create a job posting.",
+    //   });
+    // }
+
+    if (!title) {
+      return res.status(400).json({
+        success: false,
+        message: "Job title is required.",
+      });
+    }
+
+    if (!description) {
+      return res.status(400).json({
+        success: false,
+        message: "Job description is required.",
+      });
+    }
+
+    if (!location) {
+      return res.status(400).json({
+        success: false,
+        message: "Job location is required.",
+      });
+    }
+
+    if (!category) {
+      return res.status(400).json({
+        success: false,
+        message: "Job category is required.",
+      });
+    }
+
+    if (!level) {
+      return res.status(400).json({
+        success: false,
+        message: "Job level is required.",
+      });
+    }
+
+    if (!salary) {
+      return res.status(400).json({
+        success: false,
+        message: "Job salary is required.",
+      });
+    }
+
+    const newJob = new Job({
+      title,
+      description,
+      location,
+      category,
+      level,
+      salary,
+      date: Date.now(),
+      companyId,
+    });
+
+    await newJob.save();
+
+    return res.status(201).json({
+      success: true,
+      message: "Job posted successfully.",
+      newJob,
+    });
+  } catch (error) {
+    console.error("Post Job Error:", error?.stack || error?.message || error);
+
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while posting the job.",
+      error: `Post Job Error: ${error?.stack || error?.message || error}`,
     });
   }
 };
