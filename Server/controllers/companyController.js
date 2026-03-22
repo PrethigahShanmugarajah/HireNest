@@ -345,3 +345,53 @@ export const getCompanyPostedJobs = async (req, res) => {
     });
   }
 };
+
+/* -------- Change Job Visibility -------- */
+export const changeVisiblity = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const companyId = req.company._id;
+    const job = await Job.findById(id);
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "The requested job could not be found.",
+      });
+    }
+
+    // if (companyId.toString() === job.companyId.toString()) {
+    //   job.visible = !job.visible;
+    // }
+
+    if (companyId.toString() !== job.companyId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to modify this job.",
+      });
+    }
+
+    job.visible = !job.visible;
+
+    await job.save();
+
+    const visibilityStatus = job.visible ? "visible" : "hidden";
+
+    return res.status(200).json({
+      success: true,
+      message: `Job visibility changed successfully to ${visibilityStatus}`,
+      job,
+    });
+  } catch (error) {
+    console.error(
+      "Change Job Visibility Error:",
+      error?.stack || error?.message || error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while changing job visibility.",
+      error: `Change Job Visibility Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
