@@ -1,6 +1,7 @@
 // Server / routes / companyRouter.js
 import express from "express";
 import {
+  getCompanyData,
   loginCompany,
   postJob,
   registerCompany,
@@ -12,6 +13,7 @@ const companyRouter = express.Router();
 
 companyRouter.post("/register", upload.single("image"), registerCompany);
 companyRouter.post("/login", loginCompany);
+companyRouter.get("/company", protectCompany, getCompanyData);
 companyRouter.post("/post-job", protectCompany, postJob);
 
 export default companyRouter;
