@@ -124,7 +124,7 @@ export const FileInputField = ({
         className={
           trigger
             ? "hidden"
-            : `border border-indigo-100 rounded-full bg-white focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-100 cursor-pointer flex items-center ${inputClassName}`
+            : `border border-purple-100 rounded-full bg-white focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-100 cursor-pointer flex items-center ${inputClassName}`
         }
         style={{
           height: s.height,
@@ -140,7 +140,7 @@ export const FileInputField = ({
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className={`inline-flex items-center justify-center gap-2 rounded-full bg-white border border-indigo-200 hover:shadow transition-shadow ${triggerClassName}`}
+          className={`inline-flex items-center justify-center gap-2 rounded-full bg-white border border-purple-200 hover:shadow transition-shadow ${triggerClassName}`}
           style={{
             height: s.height,
             fontSize: `${s.fontSize}px`,
