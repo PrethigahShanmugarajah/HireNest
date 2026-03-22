@@ -44,6 +44,8 @@ export const InputField = ({
   onBlur,
   error,
   inputRef,
+  iconLeft,
+  iconRight,
   ...rest
 }) => {
   const rules = useMemo(() => {
@@ -116,18 +118,32 @@ export const InputField = ({
     >
       {(labelPosition === "top" || labelPosition === "left") && renderLabel}
 
-      <input
-        id={name}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        ref={inputRef}
-        className={`${unstyled ? unstyledInput : baseInput} ${inputClassName}`}
-        {...(value !== undefined ? { value } : {})}
-        onChange={(e) => onChange?.(e.target.value, e)}
-        onBlur={(e) => onBlur?.(e.target.value, e)}
-        {...rest}
-      />
+      <div className="relative w-full">
+        {iconLeft && (
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+            {iconLeft}
+          </span>
+        )}
+
+        <input
+          id={name}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          ref={inputRef}
+          className={`${unstyled ? unstyledInput : baseInput} ${iconLeft ? "pl-11" : ""} ${iconRight ? "pr-11" : ""} ${inputClassName}`}
+          {...(value !== undefined ? { value } : {})}
+          onChange={(e) => onChange?.(e.target.value, e)}
+          onBlur={(e) => onBlur?.(e.target.value, e)}
+          {...rest}
+        />
+
+        {iconRight && (
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+            {iconRight}
+          </span>
+        )}
+      </div>
 
       {(labelPosition === "right" || labelPosition === "bottom") && renderLabel}
 
