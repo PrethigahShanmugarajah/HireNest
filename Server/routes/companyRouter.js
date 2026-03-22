@@ -2,6 +2,7 @@
 import express from "express";
 import {
   getCompanyData,
+  getCompanyPostedJobs,
   loginCompany,
   postJob,
   registerCompany,
@@ -15,5 +16,6 @@ companyRouter.post("/register", upload.single("image"), registerCompany);
 companyRouter.post("/login", loginCompany);
 companyRouter.get("/company", protectCompany, getCompanyData);
 companyRouter.post("/post-job", protectCompany, postJob);
+companyRouter.get("/list-jobs", protectCompany, getCompanyPostedJobs);
 
 export default companyRouter;
