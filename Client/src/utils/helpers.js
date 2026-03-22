@@ -56,3 +56,11 @@ export const getTimeAgo = (date) => {
   const diffInYears = Math.floor(diffInMonths / 12);
   return `${diffInYears} year${diffInYears > 1 ? "s" : ""} ago`;
 };
+
+/* -------- Format date: Converts date to readable format (e.g., Mar 20, 2026) -------- */
+export const formatDate = (date) => {
+  if (!date) return "";
+
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  return new Date(date).toLocaleDateString("en-US", options);
+};
