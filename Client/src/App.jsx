@@ -12,16 +12,18 @@ import Dashboard from "./pages/recruiter/Dashboard/View/Dashboard";
 import AddJob from "./pages/recruiter/AddJob/View/AddJob";
 import ManageJobs from "./pages/recruiter/ManageJobs/View/ManageJobs";
 import ViewApplications from "./pages/recruiter/ViewApplications/View/ViewApplications";
+import "quill/dist/quill.snow.css";
 
 const App = () => {
-  const { showRecruiterLogin } = useAppContext();
+  const { location, showRecruiterLogin } = useAppContext();
+  const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
     <>
       <ToastContainer />
       <div>
         {showRecruiterLogin && <RecruiterLogin />}
-        <Navbar />
+        {!isDashboard && <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/apply-job/:id" element={<ApplyJob />} />
@@ -33,7 +35,7 @@ const App = () => {
             <Route path="view-applications" element={<ViewApplications />} />
           </Route>
         </Routes>
-        <Footer />
+        {!isDashboard && <Footer />}
       </div>
     </>
   );
