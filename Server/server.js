@@ -10,6 +10,7 @@ import connectCloudinary from "./config/cloudinary.js";
 import { clerkMiddleware } from "@clerk/express";
 import companyRouter from "./routes/companyRouter.js";
 import jobRouter from "./routes/jobRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 /* -------- INITIALIZE EXPRESS -------- */
 const app = express();
@@ -32,6 +33,7 @@ app.get("/debug-sentry", function mainHandler(req, res) {
 app.post("/webhooks", clerkWebhooks);
 app.use("/api/company", companyRouter);
 app.use("/api/jobs", jobRouter);
+app.use("/api/users", userRouter);
 
 /* -------- PORT -------- */
 const port = process.env.PORT || 4000;
