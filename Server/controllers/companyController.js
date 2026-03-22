@@ -204,6 +204,30 @@ export const loginCompany = async (req, res) => {
   }
 };
 
+/* -------- Get Company Data -------- */
+export const getCompanyData = async (req, res) => {
+  try {
+    const company = req.company;
+
+    return res.status(200).json({
+      success: true,
+      message: "Company data fetched successfully.",
+      company,
+    });
+  } catch (error) {
+    console.error(
+      "Get Company Data Error:",
+      error?.stack || error?.message || error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while fetching company data.",
+      error: `Get Company Data Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
+
 /* -------- Post Job -------- */
 export const postJob = async (req, res) => {
   try {
