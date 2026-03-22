@@ -1,6 +1,7 @@
 // Server / routes / companyRouter.js
 import express from "express";
 import {
+  changeVisiblity,
   getCompanyData,
   getCompanyPostedJobs,
   loginCompany,
@@ -17,5 +18,6 @@ companyRouter.post("/login", loginCompany);
 companyRouter.get("/company", protectCompany, getCompanyData);
 companyRouter.post("/post-job", protectCompany, postJob);
 companyRouter.get("/list-jobs", protectCompany, getCompanyPostedJobs);
+companyRouter.post("/change-visiblity", protectCompany, changeVisiblity);
 
 export default companyRouter;
