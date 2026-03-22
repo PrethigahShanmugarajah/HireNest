@@ -1,13 +1,14 @@
 // Client / src / context / AppContext.jsx
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { jobsData } from "../assets/assets";
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchFilter, setSearchFilter] = useState({
     title: "",
@@ -29,6 +30,7 @@ export const AppProvider = ({ children }) => {
 
   const value = {
     navigate,
+    location,
     searchFilter,
     setSearchFilter,
     isSearched,
