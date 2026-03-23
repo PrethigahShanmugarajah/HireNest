@@ -1,9 +1,8 @@
 // Client / src / context / AppContext.jsx
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { jobsData } from "../assets/assets";
-import { fetchCompanyData } from "../services/fetch";
+import { fetchCompanyData, fetchJobs } from "../services/fetch";
 
 export const AppContext = createContext();
 
@@ -23,23 +22,27 @@ export const AppProvider = ({ children }) => {
     return localStorage.getItem("companyToken") || null;
   });
   const [companyData, setCompanyData] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const CURRENCY = import.meta.env.VITE_CURRENCY;
   const backendUrl = import.meta.env.VITE_BASEURL;
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      setJobs(jobsData);
+    const fetchJobsService = async () => {
+      try {
+        const data = await fetchJobs();
+
+        if (data?.success) {
+          setJobs(data?.jobs || []);
+        }
+      } catch {
+        //
+      }
     };
 
-    fetchJobs();
-
-    // const storedCompanyToken = localStorage.getItem("companyToken");
-
-    // if (storedCompanyToken) {
-    //   setCompanyToken(storedCompanyToken);
-    // }
-  }, []);
+    fetchJobsService();
+  }, [backendUrl]);
 
   useEffect(() => {
     const fetchCompanyDataService = async () => {
@@ -59,6 +62,22 @@ export const AppProvider = ({ children }) => {
     }
   }, [companyToken, backendUrl]);
 
+  const getPaginatedData = useMemo(
+    () =>
+      (data = [], currentPage = 1, itemsPerPage = 10) => {
+        const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const paginatedData = data?.slice(startIndex, endIndex) || [];
+
+        return {
+          totalPages,
+          paginatedData,
+        };
+      },
+    [],
+  );
+
   const value = {
     navigate,
     location,
@@ -76,6 +95,11 @@ export const AppProvider = ({ children }) => {
     companyData,
     setCompanyData,
     backendUrl,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    setItemsPerPage,
+    getPaginatedData,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
