@@ -14,7 +14,7 @@ const sidebarLinks = [
 
 const Sidebar = () => {
   return (
-    <div className="min-h-screen border-r-2 border-gray-200 w-16 md:w-56 transition-all duration-300">
+    <div className="min-h-full border-r-2 border-gray-200 w-16 md:w-56 transition-all duration-300">
       <ul className="flex flex-col pt-5">
         {sidebarLinks.map((item, index) => {
           const Icon = item.icon;
