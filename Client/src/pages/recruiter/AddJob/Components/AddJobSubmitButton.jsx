@@ -2,7 +2,7 @@
 import Button from "../../../../components/Button";
 import { ClipLoader } from "react-spinners";
 
-const AddJobSubmitButton = ({ loading }) => {
+const AddJobSubmitButton = ({ loading, isEdit }) => {
   return (
     <Button
       type="submit"
@@ -14,6 +14,8 @@ const AddJobSubmitButton = ({ loading }) => {
         <div className="flex items-center justify-center">
           <ClipLoader size={18} color="#FFFFFF" />
         </div>
+      ) : isEdit ? (
+        "Update"
       ) : (
         "Add"
       )}
