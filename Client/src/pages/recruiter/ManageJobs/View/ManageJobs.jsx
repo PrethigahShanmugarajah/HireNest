@@ -122,9 +122,15 @@ const ManageJobs = () => {
     return () => clearTimeout(timer);
   }, [currentPage, itemsPerPage]);
 
+  const openEditJobPage = (job) => {
+    navigate(`/dashboard/update-job/${job._id}`, {
+      state: { job, isEdit: true },
+    });
+  };
+
   return (
     <>
-      <div className="container p-4 max-w-5xl">
+      <div className="container p-4 max-w-6xl">
         <ManageJobsTable
           paginatedData={paginatedData}
           currentPage={currentPage}
@@ -133,6 +139,7 @@ const ManageJobs = () => {
           deleteLoading={deleteLoading}
           openVisibilityPopup={openVisibilityPopup}
           openDeletePopup={openDeletePopup}
+          openEditJobPage={openEditJobPage}
           pageLoading={pageLoading}
         />
 
