@@ -1,6 +1,5 @@
 // Client / src / components / Pagination.jsx
-import { useEffect, useMemo } from "react";
-import { useAppContext } from "../context/AppContext";
+import { useMemo } from "react";
 import Button from "./Button";
 import { MoreHorizontal } from "lucide-react";
 import { SelectInput } from "./FormField/SelectInput";
@@ -16,12 +15,6 @@ const Pagination = ({
   className = "",
   showItemsPerPage = true,
 }) => {
-  const { setItemsPerPage } = useAppContext();
-
-  useEffect(() => {
-    setItemsPerPage(itemsPerPage);
-  }, [itemsPerPage, setItemsPerPage]);
-
   const perPageOptions = useMemo(
     () =>
       itemsPerPageOptions.map((count) => ({
