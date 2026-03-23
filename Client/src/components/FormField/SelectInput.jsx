@@ -189,12 +189,16 @@ const ClearIndicator = (props) => {
 };
 
 const IndicatorsContainer = (props) => {
-  const { hasValue } = props;
+  const { hasValue, selectProps } = props;
 
   return (
     <components.IndicatorsContainer {...props}>
-      <BeforeClearSeparator selectProps={props.selectProps} />
-      {hasValue && <ClearIndicator {...props} />}
+      {selectProps.isClearable && hasValue && (
+        <>
+          <BeforeClearSeparator selectProps={props.selectProps} />
+          <ClearIndicator {...props} />
+        </>
+      )}
       <components.DropdownIndicator {...props} />
     </components.IndicatorsContainer>
   );
