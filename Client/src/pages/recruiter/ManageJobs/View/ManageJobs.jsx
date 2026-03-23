@@ -1,95 +1,204 @@
 // Client / src / pages / recruiter / ManageJobs / View / ManageJobs.jsx
+import { useCallback, useEffect, useState } from "react";
 import { useAppContext } from "../../../../context/AppContext";
 import Button from "../../../../components/Button";
-import { formatDate } from "../../../../utils/helpers";
-import { manageJobsData } from "../../../../assets/assets";
-import { SingleCheckboxField } from "../../../../components/FormField/CheckboxField";
+import {
+  changeJobVisibilityApi,
+  deleteJobApi,
+  fetchCompanyJobsApi,
+} from "../Service/ManageJobsService";
+import ConfirmPopup from "../../../../components/ConfirmPopup";
+import Pagination from "../../../../components/Pagination";
+import ManageJobsTable from "../Components/ManageJobsTable";
 
 const ManageJobs = () => {
-  const { navigate } = useAppContext();
+  const {
+    navigate,
+    jobs,
+    setJobs,
+    companyToken,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    setItemsPerPage,
+    getPaginatedData,
+  } = useAppContext();
+
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(null);
+  const [visibilityLoading, setVisibilityLoading] = useState(null);
+  const [showVisibilityPopup, setShowVisibilityPopup] = useState(false);
+  const [selectedVisibilityJob, setSelectedVisibilityJob] = useState(null);
+  const [pageLoading, setPageLoading] = useState(false);
+
+  const fetchCompanyJobs = useCallback(async () => {
+    try {
+      const jobsData = await fetchCompanyJobsApi(companyToken);
+      setJobs(jobsData);
+    } catch {
+      //
+    }
+  }, [companyToken, setJobs]);
+
+  useEffect(() => {
+    if (companyToken) {
+      fetchCompanyJobs();
+    }
+  }, [companyToken, fetchCompanyJobs]);
+
+  const openVisibilityPopup = (job) => {
+    setSelectedVisibilityJob(job);
+    setShowVisibilityPopup(true);
+  };
+
+  const closeVisibilityPopup = () => {
+    if (visibilityLoading) return;
+    setSelectedVisibilityJob(null);
+    setShowVisibilityPopup(false);
+  };
+
+  const changeJobVisibilityService = async (id) => {
+    if (!id) return;
+
+    try {
+      setVisibilityLoading(id);
+
+      const data = await changeJobVisibilityApi(id, companyToken);
+      if (data?.success) {
+        await fetchCompanyJobs();
+        setShowVisibilityPopup(false);
+        setSelectedJob(null);
+      }
+    } catch {
+      //
+    } finally {
+      setVisibilityLoading(null);
+    }
+  };
+
+  const openDeletePopup = (job) => {
+    setSelectedJob(job);
+    setShowDeletePopup(true);
+  };
+
+  const closeDeletePopup = () => {
+    if (deleteLoading) return;
+    setSelectedJob(null);
+    setShowDeletePopup(false);
+  };
+
+  const deleteJobService = async (id) => {
+    if (!selectedJob?._id) return;
+
+    try {
+      setDeleteLoading(selectedJob._id);
+
+      const data = await deleteJobApi(id, companyToken);
+      if (data?.success) {
+        fetchCompanyJobs();
+        setShowDeletePopup(false);
+        setSelectedJob(null);
+      }
+    } catch {
+      //
+    } finally {
+      setDeleteLoading(null);
+    }
+  };
+
+  const { totalPages, paginatedData } = getPaginatedData(
+    jobs,
+    currentPage,
+    itemsPerPage,
+  );
+
+  useEffect(() => {
+    setPageLoading(true);
+
+    const timer = setTimeout(() => {
+      setPageLoading(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [currentPage, itemsPerPage]);
 
   return (
-    <div className="container p-4 max-w-5xl">
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 max-sm:text-sm">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b border-r border-gray-300 text-left max-sm:hidden">
-                #
-              </th>
+    <>
+      <div className="container p-4 max-w-5xl">
+        <ManageJobsTable
+          paginatedData={paginatedData}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          visibilityLoading={visibilityLoading}
+          deleteLoading={deleteLoading}
+          openVisibilityPopup={openVisibilityPopup}
+          openDeletePopup={openDeletePopup}
+          pageLoading={pageLoading}
+        />
 
-              <th className="py-2 px-4 border-b border-r border-gray-300 text-left">
-                Job Title
-              </th>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={(value) => {
+            setItemsPerPage(value);
+            setCurrentPage(1);
+          }}
+          itemsPerPageOptions={[5, 10, 15]}
+        />
 
-              <th className="py-2 px-4 border-b border-r border-gray-300 text-left max-sm:hidden">
-                Date
-              </th>
-
-              <th className="py-2 px-4 border-b border-r border-gray-300 text-left max-sm:hidden">
-                Location
-              </th>
-
-              <th className="py-2 px-4 border-b border-r border-gray-300 text-center">
-                Applications
-              </th>
-
-              <th className="py-2 px-4 border-b border-r border-gray-300 text-left">
-                Visible
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {manageJobsData.map((job, index) => (
-              <tr key={index} className="text-black">
-                <td className="py-2 px-4 border-b border-r border-gray-300 max-sm:hidden">
-                  {index + 1}
-                </td>
-
-                <td className="py-2 px-4 border-b border-r border-gray-300">
-                  {job.title}
-                </td>
-
-                <td className="py-2 px-4 border-b border-r border-gray-300 max-sm:hidden">
-                  {formatDate(job.date)}
-                </td>
-
-                <td className="py-2 px-4 border-b border-r border-gray-300 max-sm:hidden">
-                  {job.location}
-                </td>
-
-                <td className="py-2 px-4 border-b border-r border-gray-300 text-center">
-                  {job.applicants}
-                </td>
-
-                <td className="py-2 px-4 border-b border-r border-gray-300">
-                  <div className="ml-4">
-                    <SingleCheckboxField
-                      name={`visible-${index}`}
-                      value={job.visible}
-                      onChange={() => {}}
-                      size="s"
-                      className="flex justify-start"
-                      checkboxClassName="cursor-pointer"
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="mt-4 flex justify-end">
+          <Button
+            onClick={() => navigate("/dashboard/add-job")}
+            variant={"secondary"}
+          >
+            Add new job
+          </Button>
+        </div>
       </div>
 
-      <div className="mt-4 flex justify-end">
-        <Button
-          onClick={() => navigate("/dashboard/add-job")}
-          variant={"secondary"}
-        >
-          Add new job
-        </Button>
-      </div>
-    </div>
+      {showDeletePopup && selectedJob && (
+        <ConfirmPopup
+          onClose={closeDeletePopup}
+          onConfirm={() => deleteJobService(selectedJob._id)}
+          loading={deleteLoading === selectedJob._id}
+          item={selectedJob.title}
+          title="Delete Job"
+          description={
+            <>
+              Are you sure you want to delete <b>{selectedJob.title}</b>?
+              <br />
+              This action cannot be undone.
+            </>
+          }
+          confirmText="Delete"
+          closeText="Cancel"
+        />
+      )}
+
+      {showVisibilityPopup && selectedVisibilityJob && (
+        <ConfirmPopup
+          onClose={closeVisibilityPopup}
+          onConfirm={() =>
+            changeJobVisibilityService(selectedVisibilityJob._id)
+          }
+          loading={visibilityLoading === selectedVisibilityJob._id}
+          item={selectedVisibilityJob.title}
+          title={selectedVisibilityJob.visible ? "Hide Job" : "Show Job"}
+          description={
+            <>
+              Are you sure you want to{" "}
+              <b>{selectedVisibilityJob.visible ? "hide" : "show"}</b>{" "}
+              <b>{selectedVisibilityJob.title}</b>?
+            </>
+          }
+          confirmText={selectedVisibilityJob.visible ? "Hide" : "Show"}
+          closeText="Cancel"
+        />
+      )}
+    </>
   );
 };
 
