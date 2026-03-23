@@ -15,7 +15,7 @@ import ViewApplications from "./pages/recruiter/ViewApplications/View/ViewApplic
 import "quill/dist/quill.snow.css";
 
 const App = () => {
-  const { location, showRecruiterLogin } = useAppContext();
+  const { location, showRecruiterLogin, companyToken } = useAppContext();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
@@ -30,9 +30,16 @@ const App = () => {
           <Route path="/applications" element={<Applications />} />
 
           <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="add-job" element={<AddJob />} />
-            <Route path="manage-jobs" element={<ManageJobs />} />
-            <Route path="view-applications" element={<ViewApplications />} />
+            {companyToken ? (
+              <>
+                <Route path="manage-job" element={<ManageJobs />} />
+                <Route path="add-job" element={<AddJob />} />
+                <Route
+                  path="view-applications"
+                  element={<ViewApplications />}
+                />
+              </>
+            ) : null}
           </Route>
         </Routes>
         {!isDashboard && <Footer />}
