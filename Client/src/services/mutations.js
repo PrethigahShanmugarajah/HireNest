@@ -82,3 +82,62 @@ export const postJob = async (jobData, companyToken) => {
     throw error;
   }
 };
+
+/* -------- Change Job Visibility -------- */
+export const changeJobVisibility = async (id, companyToken) => {
+  try {
+    const { data } = await api.post(
+      API_ROUTES.COMPANY.CHANGE_VISIBILITY,
+      { id },
+      { headers: { Authorization: `Bearer ${companyToken}` } },
+    );
+    console.log("Change Job Visibility API Response:", data);
+
+    if (data?.success) {
+      toast.success(data?.message);
+      console.log("Change Job Visibility Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Change job visibility with warning");
+      console.warn(
+        "Change Job Visibility Warning:",
+        data?.message || "Change Job Visibility Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Change Job Visibility Error:", error);
+
+    throw error;
+  }
+};
+
+/* -------- Delete Job -------- */
+export const deleteJob = async (id, companyToken) => {
+  try {
+    const { data } = await api.delete(API_ROUTES.COMPANY.DELETE_JOB, {
+      headers: { Authorization: `Bearer ${companyToken}` },
+      data: { id },
+    });
+    console.log("Delete Job API Response:", data);
+
+    if (data?.success) {
+      toast.success(data?.message);
+      console.log("Delete Job Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Delete job with warning");
+      console.warn(
+        "Delete Job Warning:",
+        data?.message || "Delete Job Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Delete Job Error:", error);
+
+    throw error;
+  }
+};
