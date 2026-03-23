@@ -1,15 +1,18 @@
 // Client / src / pages / recruiter / AddJob / View / AddJob.jsx
 import { useEffect, useRef, useState } from "react";
 import Quill from "quill";
-import Button from "../../../../components/Button";
 import {
   JobCategories,
   JobLevel,
   JobLocations,
 } from "../../../../data/jobData";
-import { InputField } from "../../../../components/FormField/InputField";
-import { SelectInput } from "../../../../components/FormField/SelectInput";
 import { useAppContext } from "../../../../context/AppContext";
+import { postJobApi } from "../Service/AddJobService";
+import AddJobSelectFields from "../Components/AddJobSelectFields";
+import AddJobTitleField from "../Components/AddJobTitleField";
+import AddJobDescriptionEditor from "../Components/AddJobDescriptionEditor";
+import AddJobSalaryField from "../Components/AddJobSalaryField";
+import AddJobSubmitButton from "../Components/AddJobSubmitButton";
 
 const AddJob = () => {
   const [title, setTitle] = useState("");
@@ -17,11 +20,51 @@ const AddJob = () => {
   const [category, setCategory] = useState("Programming");
   const [level, setLevel] = useState("Beginner level");
   const [salary, setSalary] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const editorRef = useRef(null);
   const quillRef = useRef(null);
 
-  const { CURRENCY } = useAppContext();
+  const { companyToken } = useAppContext();
+
+  const resetForm = () => {
+    setTitle("");
+    setSalary(0);
+    setLocation("Colombo");
+    setCategory("Programming");
+    setLevel("Beginner level");
+
+    if (quillRef.current) {
+      quillRef.current.root.innerHTML = "";
+    }
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      const description = quillRef.current.root.innerHTML;
+
+      const data = await postJobApi({
+        title,
+        description,
+        location,
+        salary,
+        category,
+        level,
+        companyToken,
+      });
+
+      if (data.success) {
+        resetForm();
+      }
+    } catch {
+      //
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!quillRef.current && editorRef) {
@@ -47,91 +90,29 @@ const AddJob = () => {
   }));
 
   return (
-    <form className="container p-4 flex flex-col w-full items-start gap-3">
-      <div className="w-full max-w-lg">
-        <InputField
-          label="Job Title"
-          labelPosition="top"
-          name="title"
-          type="text"
-          placeholder="Job Title"
-          size="s"
-          value={title}
-          onChange={setTitle}
-          required
-        />
-      </div>
+    <form
+      onSubmit={onSubmitHandler}
+      className="container p-4 flex flex-col w-full items-start gap-3"
+    >
+      <AddJobTitleField title={title} setTitle={setTitle} />
 
-      <div className="w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-3xl">
-        <p className="my-2">
-          Job Description <span className="text-red-500 ml-1">*</span>
-        </p>
+      <AddJobDescriptionEditor editorRef={editorRef} />
 
-        <div className="quill-focus">
-          <div ref={editorRef}></div>
-        </div>
-      </div>
+      <AddJobSelectFields
+        category={category}
+        setCategory={setCategory}
+        location={location}
+        setLocation={setLocation}
+        level={level}
+        setLevel={setLevel}
+        categoryOptions={categoryOptions}
+        locationOptions={locationOptions}
+        levelOptions={levelOptions}
+      />
 
-      <div className="flex flex-col sm:flex-row gap-2 w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-3xl">
-        <div className="w-full sm:max-w-66">
-          <SelectInput
-            label="Job Category"
-            options={categoryOptions}
-            placeholder="Select Job Category"
-            size="m"
-            value={category}
-            onChange={setCategory}
-            labelClassName="mt-2"
-            required
-          />
-        </div>
+      <AddJobSalaryField salary={salary} setSalary={setSalary} />
 
-        <div className="w-full sm:max-w-49">
-          <SelectInput
-            label="Job Location"
-            options={locationOptions}
-            placeholder="Select Job Location"
-            size="m"
-            value={location}
-            onChange={setLocation}
-            required
-            labelClassName="mt-2"
-          />
-        </div>
-
-        <div className="w-full sm:max-w-53.5">
-          <SelectInput
-            label="Job Level"
-            options={levelOptions}
-            placeholder="Select Job Level"
-            size="m"
-            value={level}
-            onChange={setLevel}
-            required
-            labelClassName="mt-2"
-          />
-        </div>
-      </div>
-
-      <div className="w-full sm:w-32 max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-3xl">
-        <InputField
-          label="Job Salary"
-          labelPosition="top"
-          name="salary"
-          type="number"
-          placeholder={`${CURRENCY} 2500`}
-          size="s"
-          value={salary}
-          onChange={setSalary}
-          min={0}
-          required
-          labelClassName="mt-2"
-        />
-      </div>
-
-      <Button type="submit" className="w-28 mt-4" variant={"secondary"}>
-        Add
-      </Button>
+      <AddJobSubmitButton loading={loading} />
     </form>
   );
 };
