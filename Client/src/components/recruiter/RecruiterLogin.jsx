@@ -57,7 +57,7 @@ const RecruiterLogin = () => {
           setCompanyToken(data.token);
           localStorage.setItem("companyToken", data.token);
           setShowRecruiterLogin(false);
-          navigate("/dashboard");
+          navigate("/dashboard/manage-jobs");
         }
       } else {
         const formData = new FormData();
@@ -73,7 +73,7 @@ const RecruiterLogin = () => {
           setCompanyToken(data.token);
           localStorage.setItem("companyToken", data.token);
           setShowRecruiterLogin(false);
-          navigate("/dashboard");
+          navigate("/dashboard/manage-jobs");
         }
       }
     } catch {
