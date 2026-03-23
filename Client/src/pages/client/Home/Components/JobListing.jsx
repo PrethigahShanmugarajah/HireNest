@@ -6,16 +6,24 @@ import Button from "../../../../components/Button";
 import { MultiCheckboxField } from "../../../../components/FormField/CheckboxField";
 import { JobCategories, JobLocations } from "../../../../data/jobData";
 import JobCard from "../../../../components/client/JobCard";
-import Pagination from "./Pagination";
+import Pagination from "../../../../components/Pagination";
 
 const JobListing = () => {
-  const { searchFilter, setSearchFilter, isSearched, jobs } = useAppContext();
+  const {
+    searchFilter,
+    setSearchFilter,
+    isSearched,
+    jobs,
+    currentPage,
+    setCurrentPage,
+    getPaginatedData,
+  } = useAppContext();
 
   const [showFilter, setShowFilter] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState(jobs);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
@@ -48,8 +56,20 @@ const JobListing = () => {
 
     setFilteredJobs(newFilteredJobs);
     setCurrentPage(1);
-  }, [jobs, selectedCategories, selectedLocations, searchFilter]);
+  }, [
+    jobs,
+    selectedCategories,
+    selectedLocations,
+    searchFilter,
+    setCurrentPage,
+  ]);
   /* eslint-enable react-hooks/set-state-in-effect */
+
+  const { totalPages, paginatedData } = getPaginatedData(
+    filteredJobs,
+    currentPage,
+    itemsPerPage,
+  );
 
   return (
     <div className="conatiner 2xl:px-20 mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8">
@@ -154,18 +174,21 @@ const JobListing = () => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          {filteredJobs
-            .slice((currentPage - 1) * 6, currentPage * 6)
-            .map((job, index) => (
-              <JobCard key={index} job={job} />
-            ))}
+          {paginatedData.map((job, index) => (
+            <JobCard key={index} job={job} />
+          ))}
         </div>
 
         <Pagination
           currentPage={currentPage}
-          totalItems={filteredJobs.length}
-          itemsPerPage={6}
+          totalPages={totalPages}
           onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={(value) => {
+            setItemsPerPage(value);
+            setCurrentPage(1);
+          }}
+          itemsPerPageOptions={[6, 9, 12]}
         />
       </section>
     </div>
