@@ -56,3 +56,29 @@ export const loginCompany = async (payload) => {
     throw error;
   }
 };
+
+/* -------- Post Job -------- */
+export const postJob = async (jobData, companyToken) => {
+  try {
+    const { data } = await api.post(API_ROUTES.COMPANY.POST_JOB, jobData, {
+      headers: { Authorization: `Bearer ${companyToken}` },
+    });
+
+    console.log("Post Job API Response:", data);
+
+    if (data?.success) {
+      toast.success(data?.message);
+      console.log("Post Job Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Post job with warning");
+      console.warn("Post Job Warning:", data?.message || "Post Job Warning");
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Post Job Error:", error);
+
+    throw error;
+  }
+};
