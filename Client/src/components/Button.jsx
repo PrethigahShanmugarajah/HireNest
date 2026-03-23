@@ -12,9 +12,16 @@ const Button = ({
   disabled = false,
   iconLeft,
   iconRight,
+  color = "purple",
 }) => {
+  const colorVariants = {
+    purple: "bg-purple-600 border-purple-600 hover:bg-purple-700",
+    red: "bg-red-600 border-red-600 hover:bg-red-700",
+    gray: "bg-gray-600 border-gray-600 hover:bg-gray-700",
+  };
+
   const variants = {
-    primary: "bg-purple-600 text-white border-purple-600 hover:bg-purple-700",
+    primary: `${colorVariants[color] || colorVariants.purple} text-white`,
     secondary: "bg-black text-white border-black hover:bg-gray-900",
     text: "bg-white text-black border-gray-200 hover:bg-gray-100",
   };
