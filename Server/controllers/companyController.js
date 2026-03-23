@@ -398,3 +398,50 @@ export const changeVisiblity = async (req, res) => {
     });
   }
 };
+
+/* -------- Delete Job -------- */
+export const deleteJob = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const companyId = req.company._id;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Job id is required.",
+      });
+    }
+
+    const job = await Job.findById(id);
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "The requested job could not be found.",
+      });
+    }
+
+    if (companyId.toString() !== job.companyId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to delete this job.",
+      });
+    }
+
+    await JobApplication.deleteMany({ jobId: job._id });
+    await Job.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Job deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Delete Job Error:", error?.stack || error?.message || error);
+
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while deleting the job.",
+      error: `Delete Job Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
