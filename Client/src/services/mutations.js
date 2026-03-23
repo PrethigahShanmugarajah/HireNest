@@ -141,3 +141,31 @@ export const deleteJob = async (id, companyToken) => {
     throw error;
   }
 };
+
+/* -------- Update Job -------- */
+export const updateJob = async (id, jobData, companyToken) => {
+  try {
+    const { data } = await api.put(API_ROUTES.COMPANY.UPDATE_JOB(id), jobData, {
+      headers: { Authorization: `Bearer ${companyToken}` },
+    });
+    console.log("Update Job API Response:", data);
+
+    if (data?.success) {
+      toast.success(data?.message);
+      console.log("Update Job Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Update job with warning");
+      console.warn(
+        "Update Job Warning:",
+        data?.message || "Update Job Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Update Job Error:", error);
+
+    throw error;
+  }
+};
