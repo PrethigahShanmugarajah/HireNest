@@ -399,6 +399,104 @@ export const changeVisiblity = async (req, res) => {
   }
 };
 
+/* -------- Update Job -------- */
+export const updateJob = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, location, category, level, salary } = req.body;
+
+    const companyId = req.company._id;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Job id is required.",
+      });
+    }
+
+    if (!title) {
+      return res.status(400).json({
+        success: false,
+        message: "Job title is required.",
+      });
+    }
+
+    if (!description) {
+      return res.status(400).json({
+        success: false,
+        message: "Job description is required.",
+      });
+    }
+
+    if (!location) {
+      return res.status(400).json({
+        success: false,
+        message: "Job location is required.",
+      });
+    }
+
+    if (!category) {
+      return res.status(400).json({
+        success: false,
+        message: "Job category is required.",
+      });
+    }
+
+    if (!level) {
+      return res.status(400).json({
+        success: false,
+        message: "Job level is required.",
+      });
+    }
+
+    if (!salary) {
+      return res.status(400).json({
+        success: false,
+        message: "Job salary is required.",
+      });
+    }
+
+    const job = await Job.findById(id);
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "The requested job could not be found.",
+      });
+    }
+
+    if (companyId.toString() !== job.companyId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to update this job.",
+      });
+    }
+
+    job.title = title;
+    job.description = description;
+    job.location = location;
+    job.category = category;
+    job.level = level;
+    job.salary = salary;
+
+    await job.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Job updated successfully.",
+      job,
+    });
+  } catch (error) {
+    console.error("Update Job Error:", error?.stack || error?.message || error);
+
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while updating the job.",
+      error: `Update Job Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
+
 /* -------- Delete Job -------- */
 export const deleteJob = async (req, res) => {
   try {
