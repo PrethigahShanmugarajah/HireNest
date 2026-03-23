@@ -67,7 +67,8 @@ const ManageJobs = () => {
       if (data?.success) {
         await fetchCompanyJobs();
         setShowVisibilityPopup(false);
-        setSelectedJob(null);
+        // setSelectedJob(null);
+        setSelectedVisibilityJob(null);
       }
     } catch {
       //
@@ -88,7 +89,7 @@ const ManageJobs = () => {
   };
 
   const deleteJobService = async (id) => {
-    if (!selectedJob?._id) return;
+    if (!id) return;
 
     try {
       setDeleteLoading(selectedJob._id);
@@ -197,7 +198,7 @@ const ManageJobs = () => {
             <>
               Are you sure you want to{" "}
               <b>{selectedVisibilityJob.visible ? "hide" : "show"}</b>{" "}
-              <b>{selectedVisibilityJob.title}</b>?
+              {selectedVisibilityJob.title}?
             </>
           }
           confirmText={selectedVisibilityJob.visible ? "Hide" : "Show"}
