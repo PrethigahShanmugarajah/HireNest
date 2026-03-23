@@ -8,6 +8,7 @@ const API_ROUTES = {
     POST_JOB: "/api/company/post-job",
     LIST_JOBS: "/api/company/list-jobs",
     CHANGE_VISIBILITY: "/api/company/change-visiblity",
+    UPDATE_JOB: (id) => `/api/company/update-job/${id}`,
     DELETE_JOB: "/api/company/delete-job",
   },
   JOBS: {
