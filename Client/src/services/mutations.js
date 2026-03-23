@@ -86,9 +86,9 @@ export const postJob = async (jobData, companyToken) => {
 /* -------- Change Job Visibility -------- */
 export const changeJobVisibility = async (id, companyToken) => {
   try {
-    const { data } = await api.post(
-      API_ROUTES.COMPANY.CHANGE_VISIBILITY,
-      { id },
+    const { data } = await api.patch(
+      API_ROUTES.COMPANY.CHANGE_VISIBILITY(id),
+      {},
       { headers: { Authorization: `Bearer ${companyToken}` } },
     );
     console.log("Change Job Visibility API Response:", data);
@@ -116,9 +116,8 @@ export const changeJobVisibility = async (id, companyToken) => {
 /* -------- Delete Job -------- */
 export const deleteJob = async (id, companyToken) => {
   try {
-    const { data } = await api.delete(API_ROUTES.COMPANY.DELETE_JOB, {
+    const { data } = await api.delete(API_ROUTES.COMPANY.DELETE_JOB(id), {
       headers: { Authorization: `Bearer ${companyToken}` },
-      data: { id },
     });
     console.log("Delete Job API Response:", data);
 
