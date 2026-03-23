@@ -14,6 +14,7 @@ const Pagination = ({
   itemsPerPageOptions = [5, 10, 15, 25],
   color = "purple",
   className = "",
+  showItemsPerPage = true,
 }) => {
   const { setItemsPerPage } = useAppContext();
 
@@ -110,16 +111,20 @@ const Pagination = ({
           </Button>
         </div>
 
-        <div className="min-w-37.5">
-          <SelectInput
-            options={perPageOptions}
-            value={itemsPerPage}
-            onChange={(nextValue) => onItemsPerPageChange?.(Number(nextValue))}
-            size="m"
-            placeholder="Items per page"
-            isClearable={false}
-          />
-        </div>
+        {showItemsPerPage && (
+          <div className="min-w-37.5">
+            <SelectInput
+              options={perPageOptions}
+              value={itemsPerPage}
+              onChange={(nextValue) =>
+                onItemsPerPageChange?.(Number(nextValue))
+              }
+              size="m"
+              placeholder="Items per page"
+              isClearable={false}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
