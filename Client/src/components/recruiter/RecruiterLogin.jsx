@@ -216,12 +216,13 @@ const RecruiterLogin = () => {
                 iconRight={
                   showPassword ? (
                     <EyeOff
-                      className="w-4 h-4 cursor-pointer"
+                      c
+                      className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700"
                       onClick={() => setShowPassword(false)}
                     />
                   ) : (
                     <Eye
-                      className="w-4 h-4 cursor-pointer"
+                      className="w-4 h-4 cursor-pointer text-gray-500 hover:text-gray-700"
                       onClick={() => setShowPassword(true)}
                     />
                   )
