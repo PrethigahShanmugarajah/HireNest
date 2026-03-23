@@ -1,5 +1,6 @@
 // Client / src / pages / recruiter / AddJob / View / AddJob.jsx
 import { useEffect, useRef, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import Quill from "quill";
 import {
   JobCategories,
@@ -7,12 +8,13 @@ import {
   JobLocations,
 } from "../../../../data/jobData";
 import { useAppContext } from "../../../../context/AppContext";
-import { postJobApi } from "../Service/AddJobService";
+import { postJobApi, updateJobApi } from "../Service/AddJobService";
 import AddJobSelectFields from "../Components/AddJobSelectFields";
 import AddJobTitleField from "../Components/AddJobTitleField";
 import AddJobDescriptionEditor from "../Components/AddJobDescriptionEditor";
 import AddJobSalaryField from "../Components/AddJobSalaryField";
 import AddJobSubmitButton from "../Components/AddJobSubmitButton";
+import { fetchCompanyPostedJobs } from "../../../../services/fetch";
 
 const AddJob = () => {
   const [title, setTitle] = useState("");
@@ -25,7 +27,11 @@ const AddJob = () => {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
 
-  const { companyToken } = useAppContext();
+  const { navigate, setJobs, companyToken } = useAppContext();
+  const routerLocation = useLocation();
+  const { id } = useParams();
+  const editJob = routerLocation.state?.job;
+  const isEdit = Boolean(editJob && id);
 
   const resetForm = () => {
     setTitle("");
@@ -46,18 +52,40 @@ const AddJob = () => {
       setLoading(true);
       const description = quillRef.current.root.innerHTML;
 
-      const data = await postJobApi({
-        title,
-        description,
-        location,
-        salary,
-        category,
-        level,
-        companyToken,
-      });
+      const data = isEdit
+        ? await updateJobApi({
+            id,
+            title,
+            description,
+            location,
+            salary,
+            category,
+            level,
+            companyToken,
+          })
+        : await postJobApi({
+            title,
+            description,
+            location,
+            salary,
+            category,
+            level,
+            companyToken,
+          });
 
       if (data.success) {
-        resetForm();
+        if (isEdit) {
+          const updatedJobs = await fetchCompanyPostedJobs(companyToken);
+          console.log("Updated Company Posted Jobs:", updatedJobs);
+          setJobs(
+            (updatedJobs?.jobsData || []).sort(
+              (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
+            ),
+          );
+          navigate("/dashboard/manage-jobs");
+        } else {
+          resetForm();
+        }
       }
     } catch {
       //
@@ -73,6 +101,17 @@ const AddJob = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (isEdit && editJob && quillRef.current) {
+      setTitle(editJob.title || "");
+      setLocation(editJob.location || "Colombo");
+      setCategory(editJob.category || "Programming");
+      setLevel(editJob.level || "Beginner level");
+      setSalary(editJob.salary || 0);
+      quillRef.current.root.innerHTML = editJob.description || "";
+    }
+  }, [isEdit, editJob]);
 
   const categoryOptions = JobCategories.map((item) => ({
     value: item,
@@ -94,6 +133,10 @@ const AddJob = () => {
       onSubmit={onSubmitHandler}
       className="container p-4 flex flex-col w-full items-start gap-3"
     >
+      <h2 className="text-2xl font-semibold mb-2">
+        {isEdit ? "Update Job" : "Add Job"}
+      </h2>
+
       <AddJobTitleField title={title} setTitle={setTitle} />
 
       <AddJobDescriptionEditor editorRef={editorRef} />
@@ -112,7 +155,7 @@ const AddJob = () => {
 
       <AddJobSalaryField salary={salary} setSalary={setSalary} />
 
-      <AddJobSubmitButton loading={loading} />
+      <AddJobSubmitButton loading={loading} isEdit={isEdit} />
     </form>
   );
 };
