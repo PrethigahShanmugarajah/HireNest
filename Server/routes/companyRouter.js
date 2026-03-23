@@ -1,7 +1,7 @@
 // Server / routes / companyRouter.js
 import express from "express";
 import {
-  changeVisiblity,
+  changeVisibility,
   deleteJob,
   getCompanyData,
   getCompanyPostedJobs,
@@ -20,9 +20,9 @@ companyRouter.post("/login", loginCompany);
 companyRouter.get("/company", protectCompany, getCompanyData);
 companyRouter.post("/post-job", protectCompany, postJob);
 companyRouter.get("/list-jobs", protectCompany, getCompanyPostedJobs);
-companyRouter.post("/change-visiblity", protectCompany, changeVisiblity);
+companyRouter.patch("/change-visibility/:id", protectCompany, changeVisibility);
 
 companyRouter.put("/update-job/:id", protectCompany, updateJob);
-companyRouter.delete("/delete-job", protectCompany, deleteJob);
+companyRouter.delete("/delete-job/:id", protectCompany, deleteJob);
 
 export default companyRouter;
