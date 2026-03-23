@@ -350,9 +350,9 @@ export const getCompanyPostedJobs = async (req, res) => {
 };
 
 /* -------- Change Job Visibility -------- */
-export const changeVisiblity = async (req, res) => {
+export const changeVisibility = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const companyId = req.company._id;
     const job = await Job.findById(id);
 
@@ -500,7 +500,7 @@ export const updateJob = async (req, res) => {
 /* -------- Delete Job -------- */
 export const deleteJob = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const companyId = req.company._id;
 
     if (!id) {
