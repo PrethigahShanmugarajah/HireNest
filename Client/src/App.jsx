@@ -34,6 +34,7 @@ const App = () => {
               <>
                 <Route path="manage-jobs" element={<ManageJobs />} />
                 <Route path="add-job" element={<AddJob />} />
+                <Route path="update-job/:id" element={<AddJob />} />
                 <Route
                   path="view-applications"
                   element={<ViewApplications />}
