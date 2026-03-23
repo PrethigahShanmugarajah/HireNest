@@ -23,7 +23,6 @@ export const AppProvider = ({ children }) => {
   });
   const [companyData, setCompanyData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const CURRENCY = import.meta.env.VITE_CURRENCY;
   const backendUrl = import.meta.env.VITE_BASEURL;
@@ -97,8 +96,6 @@ export const AppProvider = ({ children }) => {
     backendUrl,
     currentPage,
     setCurrentPage,
-    itemsPerPage,
-    setItemsPerPage,
     getPaginatedData,
   };
 
