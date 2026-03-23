@@ -8,6 +8,7 @@ import {
   loginCompany,
   postJob,
   registerCompany,
+  updateJob,
 } from "../controllers/companyController.js";
 import upload from "../config/multer.js";
 import { protectCompany } from "../middleware/authMiddleware.js";
@@ -21,6 +22,7 @@ companyRouter.post("/post-job", protectCompany, postJob);
 companyRouter.get("/list-jobs", protectCompany, getCompanyPostedJobs);
 companyRouter.post("/change-visiblity", protectCompany, changeVisiblity);
 
+companyRouter.put("/update-job/:id", protectCompany, updateJob);
 companyRouter.delete("/delete-job", protectCompany, deleteJob);
 
 export default companyRouter;
