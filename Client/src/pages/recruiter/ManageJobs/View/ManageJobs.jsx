@@ -19,8 +19,6 @@ const ManageJobs = () => {
     companyToken,
     currentPage,
     setCurrentPage,
-    itemsPerPage,
-    setItemsPerPage,
     getPaginatedData,
   } = useAppContext();
 
@@ -31,6 +29,7 @@ const ManageJobs = () => {
   const [showVisibilityPopup, setShowVisibilityPopup] = useState(false);
   const [selectedVisibilityJob, setSelectedVisibilityJob] = useState(null);
   const [pageLoading, setPageLoading] = useState(false);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const fetchCompanyJobs = useCallback(async () => {
     try {
