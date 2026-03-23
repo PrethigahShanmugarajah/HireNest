@@ -6,10 +6,18 @@ import Sidebar from "../../../../components/recruiter/Sidebar";
 import { formatText } from "../../../../utils/helpers";
 
 const Dashboard = () => {
-  const { navigate, companyData } = useAppContext();
+  const { navigate, setCompanyToken, companyData, setCompanyData } =
+    useAppContext();
+
+  const logout = () => {
+    setCompanyToken(null);
+    localStorage.removeItem("companyToken");
+    setCompanyData(null);
+    navigate("/");
+  };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* -------- Navbar for Recruiter Panel -------- */}
       <div className="shadow py-4">
         <div className="px-5 flex justify-between items-center">
@@ -38,7 +46,9 @@ const Dashboard = () => {
 
                 <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12">
                   <ul className="list-none m-0 p-2 bg-white rounded-md border border-gray-200 text-sm">
-                    <li className="py-1 px-2 cursor-pointer">Logout</li>
+                    <li onClick={logout} className="py-1 px-2 cursor-pointer">
+                      Logout
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -47,7 +57,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="flex items-start">
+      <div className="flex items-stretch flex-1 min-h-0">
         <Sidebar />
         <div className="flex-1 w-full">
           <Outlet />
