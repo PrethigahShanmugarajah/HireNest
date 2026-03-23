@@ -2,6 +2,7 @@
 import express from "express";
 import {
   changeVisiblity,
+  deleteJob,
   getCompanyData,
   getCompanyPostedJobs,
   loginCompany,
@@ -19,5 +20,7 @@ companyRouter.get("/company", protectCompany, getCompanyData);
 companyRouter.post("/post-job", protectCompany, postJob);
 companyRouter.get("/list-jobs", protectCompany, getCompanyPostedJobs);
 companyRouter.post("/change-visiblity", protectCompany, changeVisiblity);
+
+companyRouter.delete("/delete-job", protectCompany, deleteJob);
 
 export default companyRouter;
