@@ -168,3 +168,61 @@ export const updateJob = async (id, jobData, companyToken) => {
     throw error;
   }
 };
+
+/* -------- Apply Job -------- */
+export const applyJob = async (jobId, token) => {
+  try {
+    const { data } = await api.post(
+      API_ROUTES.USERS.APPLY,
+      { jobId },
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+    console.log("Apply Job API Response:", data);
+
+    if (data?.success) {
+      toast.success(data?.message);
+      console.log("Apply Job Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Apply job with warning");
+      console.warn("Apply Job Warning:", data?.message || "Apply Job Warning");
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Apply Job Error:", error);
+
+    throw error;
+  }
+};
+
+/* -------- Update User Resume -------- */
+export const updateUserResume = async (resume,token) => {
+  try {
+      const formData = new FormData();
+    formData.append("resume", resume);
+    
+    const { data } = await api.patch(API_ROUTES.USERS.RESUME,formData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log("Update User Resume API Response:", data);
+
+    if (data?.success) {
+      toast.success(data?.message);
+      console.log("Update User Resume Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Update user resume with warning");
+      console.warn(
+        "Update User Resume Warning:",
+        data?.message || "Update User Resume Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Update User Resume Error:", error);
+
+    throw error;
+  }
+};
