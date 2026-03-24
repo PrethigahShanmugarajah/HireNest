@@ -37,6 +37,12 @@ const ConfirmPopup = ({
       loader: "#EF4444",
       border: "border-red-300",
     },
+    green: {
+      button: "bg-green-600 hover:bg-green-700 text-white",
+      title: "text-green-600",
+      loader: "#22C55E",
+      border: "border-green-300",
+    },
   };
 
   const colors = colorClasses[confirmColor] || colorClasses.purple;
@@ -64,7 +70,7 @@ const ConfirmPopup = ({
 
         <div className="mt-2 text-center">
           <h4
-            className={`mb-2 text-lg font-semibold text-purple-600  ${colors.title}`}
+            className={`mb-2 text-lg font-semibold ${colors.title}`}
           >
             {title || "Are you sure?"}
           </h4>
