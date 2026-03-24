@@ -6,7 +6,12 @@ export const formatText = (name = "") => {
     .toLowerCase()
     .replace(/[_-]+/g, " ")
     .split(" ")
-    .filter(Boolean)
+    .filter(
+      (word) =>
+        word &&
+        word.toLowerCase() !== "null" &&
+        word.toLowerCase() !== "undefined",
+    )
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
