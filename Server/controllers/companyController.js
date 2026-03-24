@@ -380,6 +380,51 @@ export const getCompanyPostedJobs = async (req, res) => {
   }
 };
 
+/* -------- Change Job Application Status -------- */
+export const changeJobApplicationStatus = async (req, res) => {
+  try {
+    const { id, status } = req.params;
+
+    if (!id || !status) {
+      return res.status(400).json({
+        success: false,
+        message: "Application ID and status are required.",
+      });
+    }
+
+    const updatedApplication = await JobApplication.findOneAndUpdate(
+      { _id: id },
+      { status },
+      { new: true },
+    );
+
+    if (!updatedApplication) {
+      return res.status(404).json({
+        success: false,
+        message: "Job application not found.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Job application status updated successfully.",
+      application: updatedApplication,
+    });
+  } catch (error) {
+    console.error(
+      "Change Job Application Status Error:",
+      error?.stack || error?.message || error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message:
+        "An unexpected error occurred while updating job application status.",
+      error: `Change Job Application Status Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
+
 /* -------- Change Job Visibility -------- */
 export const changeVisibility = async (req, res) => {
   try {
