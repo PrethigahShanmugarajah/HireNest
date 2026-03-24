@@ -16,7 +16,7 @@ const Button = ({
 }) => {
   const colorVariants = {
     purple: "bg-purple-600 border-purple-600 hover:bg-purple-700",
-    red: "bg-red-600 border-red-600 hover:bg-red-700",
+    green: "bg-green-600 border-green-600 hover:bg-green-700",
     gray: "bg-gray-600 border-gray-600 hover:bg-gray-700",
   };
 
