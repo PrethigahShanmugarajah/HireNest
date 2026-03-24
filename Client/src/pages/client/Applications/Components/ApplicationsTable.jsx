@@ -90,9 +90,9 @@ const ApplicationsTable = ({
                   <td className="py-2 px-4 border-b border-r border-gray-200 text-center">
                     <span
                       className={`${
-                        job.status === "Accepted"
+                        job.status === "Accept"
                           ? "bg-green-300"
-                          : job.status === "Rejected"
+                          : job.status === "Reject"
                             ? "bg-red-300"
                             : "bg-purple-300"
                       } px-4 py-1.5 rounded`}
