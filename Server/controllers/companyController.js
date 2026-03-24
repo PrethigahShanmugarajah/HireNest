@@ -313,6 +313,37 @@ export const postJob = async (req, res) => {
   }
 };
 
+/* -------- Get Company Job Applicants -------- */
+export const getCompanyJobApplicants = async (req, res) => {
+  try {
+    const companyId = req.company._id;
+
+    const applications = await JobApplication.find({ companyId })
+      .populate("userId", "name image resume")
+      .populate("jobId", "title location category level salary")
+      .exec();
+
+    return res.status(200).json({
+      success: true,
+      message: "Company job applicants fetched successfully.",
+      totalApplicants: applications.length,
+      applications,
+    });
+  } catch (error) {
+    console.error(
+      "Get Company Job Applicants Error:",
+      error?.stack || error?.message || error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message:
+        "An unexpected error occurred while fetching company job applicants.",
+      error: `Get Company Job Applicants Error: ${error?.stack || error?.message || error}`,
+    });
+  }
+};
+
 /* -------- Get Company Posted Jobs -------- */
 export const getCompanyPostedJobs = async (req, res) => {
   try {
