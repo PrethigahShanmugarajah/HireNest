@@ -392,23 +392,41 @@ export const changeJobApplicationStatus = async (req, res) => {
       });
     }
 
-    const updatedApplication = await JobApplication.findOneAndUpdate(
-      { _id: id },
-      { status },
-      { new: true },
-    );
+    const validStatuses = ["Pending", "Accept", "Reject"];
 
-    if (!updatedApplication) {
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid application status provided.",
+      });
+    }
+
+    const existingApplication = await JobApplication.findById(id);
+
+    if (!existingApplication) {
       return res.status(404).json({
         success: false,
         message: "Job application not found.",
       });
     }
 
+    const oldStatus = existingApplication.status;
+
+    existingApplication.status = status;
+    await existingApplication.save();
+
     return res.status(200).json({
       success: true,
-      message: "Job application status updated successfully.",
-      application: updatedApplication,
+      message:
+        status === "Accept"
+          ? "Application accepted successfully."
+          : status === "Reject"
+            ? "Application rejected successfully."
+            : "Application status updated successfully.",
+      applicationId: existingApplication._id,
+      oldStatus,
+      newStatus: existingApplication.status,
+      application: existingApplication,
     });
   } catch (error) {
     console.error(
