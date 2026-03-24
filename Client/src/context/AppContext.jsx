@@ -1,8 +1,21 @@
 // Client / src / context / AppContext.jsx
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchCompanyData, fetchJobs } from "../services/fetch";
+import {
+  fetchCompanyData,
+  fetchJobs,
+  fetchUserData,
+  fetchUserJobApplications,
+} from "../services/fetch";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 export const AppContext = createContext();
 
@@ -23,9 +36,14 @@ export const AppProvider = ({ children }) => {
   });
   const [companyData, setCompanyData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [userData, setUserData] = useState(null);
+  const [userApplications, setUserApplications] = useState([]);
 
   const CURRENCY = import.meta.env.VITE_CURRENCY;
   const backendUrl = import.meta.env.VITE_BASEURL;
+
+  const { user } = useUser();
+  const { getToken } = useAuth();
 
   useEffect(() => {
     const fetchJobsService = async () => {
@@ -41,13 +59,12 @@ export const AppProvider = ({ children }) => {
     };
 
     fetchJobsService();
-  }, [backendUrl]);
+  }, []);
 
   useEffect(() => {
     const fetchCompanyDataService = async () => {
       try {
         const data = await fetchCompanyData(companyToken);
-
         if (data?.success) {
           setCompanyData(data?.company);
         }
@@ -59,7 +76,46 @@ export const AppProvider = ({ children }) => {
     if (companyToken) {
       fetchCompanyDataService();
     }
-  }, [companyToken, backendUrl]);
+  }, [companyToken]);
+
+  const fetchUserDataService = useCallback(async () => {
+    try {
+      const token = await getToken();
+      const data = await fetchUserData(token);
+
+      if (data?.success) {
+        setUserData(data?.user);
+      }
+    } catch {
+      //
+    }
+  }, [getToken]);
+
+  const fetchUserJobApplicationsService = useCallback(async () => {
+    try {
+      const token = await getToken();
+      if (!token) return;
+
+      const applicationsData = await fetchUserJobApplications(token);
+
+      if (applicationsData?.success) {
+        setUserApplications(applicationsData?.applications || []);
+      }
+    } catch {
+      //
+    }
+  }, [getToken]);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (!user) return;
+
+      await fetchUserDataService();
+      await fetchUserJobApplicationsService();
+    };
+
+    loadUserData();
+  }, [user, fetchUserDataService, fetchUserJobApplicationsService]);
 
   const getPaginatedData = useMemo(
     () =>
@@ -97,6 +153,12 @@ export const AppProvider = ({ children }) => {
     currentPage,
     setCurrentPage,
     getPaginatedData,
+    userData,
+    setUserData,
+    userApplications,
+    setUserApplications,
+    fetchUserDataService,
+    fetchUserJobApplicationsService,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
