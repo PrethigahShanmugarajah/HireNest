@@ -197,12 +197,12 @@ export const applyJob = async (jobId, token) => {
 };
 
 /* -------- Update User Resume -------- */
-export const updateUserResume = async (resume,token) => {
+export const updateUserResume = async (resume, token) => {
   try {
-      const formData = new FormData();
+    const formData = new FormData();
     formData.append("resume", resume);
-    
-    const { data } = await api.patch(API_ROUTES.USERS.RESUME,formData, {
+
+    const { data } = await api.patch(API_ROUTES.USERS.RESUME, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Update User Resume API Response:", data);
@@ -222,6 +222,36 @@ export const updateUserResume = async (resume,token) => {
   } catch (error) {
     toast.error(error?.response?.data?.message || error?.message);
     console.error("Update User Resume Error:", error);
+
+    throw error;
+  }
+};
+
+/* -------- Change Job Application Status -------- */
+export const changeJobApplicationStatus = async (companyToken, id, status) => {
+  try {
+    const { data } = await api.patch(
+      API_ROUTES.COMPANY.CHANGE_STATUS(id, status),
+      {},
+      { headers: { Authorization: `Bearer ${companyToken}` } },
+    );
+    console.log("Change Job Application Status API Response:", data);
+
+    if (data?.success) {
+      toast.success(data?.message);
+      console.log("Change Job Application Status Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Change job application status with warning");
+      console.warn(
+        "Change Job Application Status Warning:",
+        data?.message || "Change Job Application Status Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Change Job Application Status Error:", error);
 
     throw error;
   }
