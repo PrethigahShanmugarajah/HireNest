@@ -85,3 +85,90 @@ export const fetchJobs = async () => {
     throw error;
   }
 };
+
+/* -------- Fetch User Data  -------- */
+export const fetchUserData = async (token) => {
+  try {
+    const { data } = await api.get(API_ROUTES.USERS.ME, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    console.log("Fetch User Data API Response:", data);
+
+    if (data?.success) {
+      // toast.success(data?.message);
+      console.log("Fetch User Data Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Fetch user data with warning");
+      console.warn(
+        "Fetch User Data Warning:",
+        data?.message || "Fetch User Data with Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Fetch User Data Error:", error);
+
+    throw error;
+  }
+};
+
+/* -------- Fetch User Applied Applications -------- */
+export const fetchUserJobApplications = async (token) => {
+  try {
+    const { data } = await api.get(API_ROUTES.USERS.APPLICATIONS, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    console.log("Fetch User Applied Applications API Response:", data);
+
+    if (data?.success) {
+      // toast.success(data?.message);
+      console.log("Fetch User Applied Applications Success:", data?.message);
+    } else {
+      toast.warn(
+        data?.message || "Fetch user applied applications with warning",
+      );
+      console.warn(
+        "Fetch User Applied Applications Warning:",
+        data?.message || "Fetch User Applied Applications with Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Fetch User Applied Applications Error:", error);
+
+    throw error;
+  }
+};
+
+/* -------- Fetch Job By ID  -------- */
+export const fetchJobByID = async (id) => {
+  try {
+    const { data } = await api.get(API_ROUTES.JOBS.GET_BY_ID(id));
+
+    console.log("Fetch Job By ID API Response:", data);
+
+    if (data?.success) {
+      // toast.success(data?.message);
+      console.log("Fetch Job By ID Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Fetch job with warning");
+      console.warn(
+        "Fetch Job By ID Warning:",
+        data?.message || "Fetch Job By ID with Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Fetch Job By ID Error:", error);
+
+    throw error;
+  }
+};
