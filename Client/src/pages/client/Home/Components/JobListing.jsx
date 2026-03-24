@@ -17,6 +17,7 @@ const JobListing = () => {
     currentPage,
     setCurrentPage,
     getPaginatedData,
+    userApplications,
   } = useAppContext();
 
   const [showFilter, setShowFilter] = useState(false);
@@ -69,6 +70,10 @@ const JobListing = () => {
     filteredJobs,
     currentPage,
     itemsPerPage,
+  );
+
+  const appliedJobsIds = new Set(
+    (userApplications || []).map((app) => app?.jobId?._id),
   );
 
   return (
@@ -175,7 +180,11 @@ const JobListing = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {paginatedData.map((job, index) => (
-            <JobCard key={index} job={job} />
+            <JobCard
+              key={index}
+              job={job}
+              isAlreadyApplied={appliedJobsIds.has(job._id)}
+            />
           ))}
         </div>
 
