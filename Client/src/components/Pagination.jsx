@@ -24,7 +24,7 @@ const Pagination = ({
     [itemsPerPageOptions],
   );
 
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1 && !showItemsPerPage) return null;
 
   const goToPage = (page) => {
     if (page < 1 || page > totalPages || page === currentPage) return;
