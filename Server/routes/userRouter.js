@@ -13,6 +13,6 @@ const userRouter = express.Router();
 userRouter.get("/me", getUserData);
 userRouter.post("/apply", applyForJob);
 userRouter.get("/applications", getUserJobApplications);
-userRouter.put("/resume", upload.single("resume"), updateUserResume);
+userRouter.patch("/resume", upload.single("resume"), updateUserResume);
 
 export default userRouter;
