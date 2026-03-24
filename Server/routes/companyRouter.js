@@ -4,6 +4,7 @@ import {
   changeVisibility,
   deleteJob,
   getCompanyData,
+  getCompanyJobApplicants,
   getCompanyPostedJobs,
   loginCompany,
   postJob,
@@ -19,9 +20,9 @@ companyRouter.post("/register", upload.single("image"), registerCompany);
 companyRouter.post("/login", loginCompany);
 companyRouter.get("/company", protectCompany, getCompanyData);
 companyRouter.post("/post-job", protectCompany, postJob);
+companyRouter.get("/applicants", protectCompany, getCompanyJobApplicants);
 companyRouter.get("/list-jobs", protectCompany, getCompanyPostedJobs);
 companyRouter.patch("/change-visibility/:id", protectCompany, changeVisibility);
-
 companyRouter.put("/update-job/:id", protectCompany, updateJob);
 companyRouter.delete("/delete-job/:id", protectCompany, deleteJob);
 
