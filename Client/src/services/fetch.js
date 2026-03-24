@@ -172,3 +172,32 @@ export const fetchJobByID = async (id) => {
     throw error;
   }
 };
+
+/* -------- Fetch Company Job Applicants  -------- */
+export const fetchCompanyJobApplicants = async (companyToken) => {
+  try {
+    const { data } = await api.get(API_ROUTES.COMPANY.APPLICANTS, {
+      headers: { Authorization: `Bearer ${companyToken}` },
+    });
+
+    console.log("Fetch Company Job Applicants API Response:", data);
+
+    if (data?.success) {
+      // toast.success(data?.message);
+      console.log("Fetch Company Job Applicants Success:", data?.message);
+    } else {
+      toast.warn(data?.message || "Company applicants fetched with warnings.");
+      console.warn(
+        "Fetch Company Job Applicants Warning:",
+        data?.message || "Fetch Company Job Applicants with Warning",
+      );
+    }
+
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message || error?.message);
+    console.error("Fetch Company Job Applicants Error:", error);
+
+    throw error;
+  }
+};
