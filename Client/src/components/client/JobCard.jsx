@@ -2,7 +2,7 @@
 import Button from "../Button";
 import { useAppContext } from "../../context/AppContext";
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, isAlreadyApplied = false }) => {
   const { navigate } = useAppContext();
 
   return (
@@ -18,9 +18,7 @@ const JobCard = ({ job }) => {
           {job.location}
         </span>
 
-        <span className="bg-pink-300 px-4 py-1.5 rounded">
-          {job.level}
-        </span>
+        <span className="bg-pink-300 px-4 py-1.5 rounded">{job.level}</span>
       </div>
 
       <p
@@ -35,9 +33,9 @@ const JobCard = ({ job }) => {
             scrollTo(0, 0);
           }}
           className="px-4!"
-          variant={"primary"}
+          disabled={isAlreadyApplied}
         >
-          Apply Now
+          {isAlreadyApplied ? "Already Applied" : "Apply Now"}
         </Button>
 
         <Button
