@@ -1,7 +1,3 @@
-Here is your **HireNest README.md** written in the **same style as Spendora**.
-
----
-
 # 💼 HireNest
 
 [![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
@@ -208,5 +204,3 @@ Faculty of Computing <br>
 Sabaragamuwa University of Sri Lanka
 
 ---
-
-If you want, I can also write a **short GitHub description (350 characters)** for HireNest.
