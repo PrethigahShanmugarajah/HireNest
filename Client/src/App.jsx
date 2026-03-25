@@ -1,4 +1,3 @@
-// Client / src / App.jsx
 import { ToastContainer } from "react-toastify";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/client/Navbar";

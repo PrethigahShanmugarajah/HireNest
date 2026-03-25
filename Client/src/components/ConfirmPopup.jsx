@@ -1,4 +1,3 @@
-// Client / src / components / ConfirmPopup.jsx
 import { X } from "lucide-react";
 import { ClipLoader } from "react-spinners";
 
@@ -69,9 +68,7 @@ const ConfirmPopup = ({
         )}
 
         <div className="mt-2 text-center">
-          <h4
-            className={`mb-2 text-lg font-semibold ${colors.title}`}
-          >
+          <h4 className={`mb-2 text-lg font-semibold ${colors.title}`}>
             {title || "Are you sure?"}
           </h4>
 

@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / AddJob / Components / AddJobSelectFields.jsx
 import { SelectInput } from "../../../../components/FormField/SelectInput";
 
 const AddJobSelectFields = ({

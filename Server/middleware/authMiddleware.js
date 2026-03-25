@@ -1,10 +1,8 @@
-// Server / middleware / authMiddleware.js
 import jwt from "jsonwebtoken";
 import Company from "../models/Company.js";
 
 export const protectCompany = async (req, res, next) => {
   try {
-    // const token = req.headers.token;
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -22,17 +20,8 @@ export const protectCompany = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     req.company = await Company.findById(decoded.id).select("-password");
-
-    // if (!token) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "Authentication token is required. Please log in again.",
-    //   });
-    // }
 
     if (!req.company) {
       return res.status(401).json({

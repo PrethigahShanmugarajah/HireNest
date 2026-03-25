@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / ViewApplications / Service / ViewApplicationsService.jsx
 import { fetchCompanyJobApplicants } from "../../../../services/fetch";
 import { changeJobApplicationStatus } from "../../../../services/mutations";
 

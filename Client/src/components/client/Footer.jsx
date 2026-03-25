@@ -1,4 +1,3 @@
-// Client / src / components / client / Footer.jsx
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import { Logo } from "../../assets/assets";
 

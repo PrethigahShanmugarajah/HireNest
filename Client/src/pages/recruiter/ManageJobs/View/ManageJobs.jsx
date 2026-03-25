@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / ManageJobs / View / ManageJobs.jsx
 import { useCallback, useEffect, useState } from "react";
 import { useAppContext } from "../../../../context/AppContext";
 import Button from "../../../../components/Button";

@@ -1,4 +1,3 @@
-// Client / src / components / recruiter / RecruiterLogin.jsx
 import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { useAppContext } from "../../context/AppContext";

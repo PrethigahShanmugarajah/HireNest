@@ -1,4 +1,3 @@
-// Client / src / pages / client / Applications / Components / ApplicationResumeSection.jsx
 import { Upload } from "lucide-react";
 import { FileInputField } from "../../../../components/FormField/FileInputField";
 import Button from "../../../../components/Button";

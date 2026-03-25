@@ -1,4 +1,3 @@
-// Client / src / pages / client / ApplyJob / Components / ApplyJobHeaderCard.jsx
 import { Banknote, Briefcase, MapPin, User } from "lucide-react";
 import { useAppContext } from "../../../../context/AppContext";
 import { getTimeAgo, kConverter } from "../../../../utils/helpers";
@@ -18,7 +17,7 @@ const ApplyJobHeaderCard = ({
       <div className="flex flex-col md:flex-row items-center">
         <img
           src={jobData?.companyId?.image}
-          alt="Company_Icon"
+          alt={jobData?.companyId?.name}
           className="h-24 bg-white rounded-lg p-4 mr-4 max-md:mb-4 border border-gray-200"
         />
 

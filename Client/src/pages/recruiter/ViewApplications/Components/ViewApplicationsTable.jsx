@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / ViewApplications / Components / ViewApplicationsTable.jsx
 import { Commet } from "react-loading-indicators";
 import { formatText } from "../../../../utils/helpers";
 import { BeatLoader } from "react-spinners";

@@ -1,4 +1,3 @@
-// Server / controllers / userController.js
 import Job from "../models/Job.js";
 import JobApplication from "../models/JobApplication.js";
 import User from "../models/User.js";
@@ -8,7 +7,6 @@ import { v2 as cloudinary } from "cloudinary";
 /* -------- Get User Data -------- */
 export const getUserData = async (req, res) => {
   try {
-    // const userId = req.auth?.userId;
     const { userId } = getAuth(req);
 
     if (!userId) {
@@ -50,7 +48,6 @@ export const getUserData = async (req, res) => {
 export const applyForJob = async (req, res) => {
   try {
     const { jobId } = req.body;
-    // const userId = req.auth.userId;
     const { userId } = getAuth(req);
 
     if (!userId) {
@@ -67,15 +64,7 @@ export const applyForJob = async (req, res) => {
       });
     }
 
-    // const isAlreadyApplied = await JobApplication.find({ jobId, userId });
     const isAlreadyApplied = await JobApplication.findOne({ jobId, userId });
-
-    // if (isAlreadyApplied.length > 0) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Already Applied",
-    //   });
-    // }
 
     if (isAlreadyApplied) {
       return res.status(409).json({
@@ -123,7 +112,6 @@ export const applyForJob = async (req, res) => {
 /* -------- Get User Applied Applications -------- */
 export const getUserJobApplications = async (req, res) => {
   try {
-    // const userId = req.auth.userId;
     const { userId } = getAuth(req);
 
     if (!userId) {
@@ -170,7 +158,6 @@ export const getUserJobApplications = async (req, res) => {
 /* -------- Update User Profile (Resume) -------- */
 export const updateUserResume = async (req, res) => {
   try {
-    // const userId = req.auth.userId;
     const { userId } = getAuth(req);
 
     if (!userId) {
@@ -180,7 +167,6 @@ export const updateUserResume = async (req, res) => {
       });
     }
 
-    // const resumeFile = req.resumeFile;
     const resumeFile = req.file;
 
     if (!resumeFile) {

@@ -1,4 +1,3 @@
-// Server / controllers / jobController.js
 import Job from "../models/Job.js";
 
 /* -------- Get Jobs -------- */

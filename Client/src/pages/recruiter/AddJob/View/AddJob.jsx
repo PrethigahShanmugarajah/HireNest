@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / AddJob / View / AddJob.jsx
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Quill from "quill";

@@ -1,4 +1,3 @@
-// Server / routes / jobRouter.js
 import express from "express";
 import { getJobByID, getJobs } from "../controllers/jobController.js";
 

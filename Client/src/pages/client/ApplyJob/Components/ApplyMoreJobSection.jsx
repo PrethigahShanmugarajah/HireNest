@@ -1,4 +1,3 @@
-// Client / src / pages / client / ApplyJob / Components / ApplyMoreJobSection.jsx
 import JobCard from "../../../../components/client/JobCard";
 
 const ApplyMoreJobSection = ({ jobData, jobs, userApplications }) => {

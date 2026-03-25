@@ -1,4 +1,3 @@
-// Client / src / components / Pagination.jsx
 import { useMemo } from "react";
 import Button from "./Button";
 import { MoreHorizontal } from "lucide-react";

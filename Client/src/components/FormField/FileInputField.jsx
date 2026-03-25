@@ -1,4 +1,3 @@
-// Client / src / components / FormField / FileInputField.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const SIZE_CONFIG = {

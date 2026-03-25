@@ -1,4 +1,3 @@
-// Client / src / services / fetch.js
 import { toast } from "react-toastify";
 import API_ROUTES from "../api/api_route";
 import api from "../api/axios";
@@ -10,12 +9,7 @@ export const fetchCompanyData = async (companyToken) => {
       headers: { Authorization: `Bearer ${companyToken}` },
     });
 
-    console.log("Fetch Company Data API Response:", data);
-
-    if (data?.success) {
-      // toast.success(data?.message);
-      console.log("Fetch Company Data Success:", data?.message);
-    } else {
+    if (!data?.success) {
       toast.warn(data?.message || "Company data fetched with warnings.");
       console.warn(
         "Fetch Company Data Warning:",
@@ -38,12 +32,8 @@ export const fetchCompanyPostedJobs = async (companyToken) => {
     const { data } = await api.get(API_ROUTES.COMPANY.LIST_JOBS, {
       headers: { Authorization: `Bearer ${companyToken}` },
     });
-    console.log("Fetch Company Posted Jobs API Response:", data);
 
-    if (data?.success) {
-      // toast.success(data?.message);
-      console.log("Fetch Company Posted Jobs Success:", data?.message);
-    } else {
+    if (!data?.success) {
       toast.warn(data?.message || "Fetch company posted jobs with warning");
       console.warn(
         "Fetch Company Posted Jobs Warning:",
@@ -64,12 +54,8 @@ export const fetchCompanyPostedJobs = async (companyToken) => {
 export const fetchJobs = async () => {
   try {
     const { data } = await api.get(API_ROUTES.JOBS.GET);
-    console.log("Fetch Jobs API Response:", data);
 
-    if (data?.success) {
-      // toast.success(data?.message);
-      console.log("Fetch Jobs Success:", data?.message);
-    } else {
+    if (!data?.success) {
       toast.warn(data?.message || "Fetch jobs with warning");
       console.warn(
         "Fetch Jobs Warning:",
@@ -93,12 +79,7 @@ export const fetchUserData = async (token) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log("Fetch User Data API Response:", data);
-
-    if (data?.success) {
-      // toast.success(data?.message);
-      console.log("Fetch User Data Success:", data?.message);
-    } else {
+    if (!data?.success) {
       toast.warn(data?.message || "Fetch user data with warning");
       console.warn(
         "Fetch User Data Warning:",
@@ -122,12 +103,7 @@ export const fetchUserJobApplications = async (token) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log("Fetch User Applied Applications API Response:", data);
-
-    if (data?.success) {
-      // toast.success(data?.message);
-      console.log("Fetch User Applied Applications Success:", data?.message);
-    } else {
+    if (!data?.success) {
       toast.warn(
         data?.message || "Fetch user applied applications with warning",
       );
@@ -151,12 +127,7 @@ export const fetchJobByID = async (id) => {
   try {
     const { data } = await api.get(API_ROUTES.JOBS.GET_BY_ID(id));
 
-    console.log("Fetch Job By ID API Response:", data);
-
-    if (data?.success) {
-      // toast.success(data?.message);
-      console.log("Fetch Job By ID Success:", data?.message);
-    } else {
+    if (!data?.success) {
       toast.warn(data?.message || "Fetch job with warning");
       console.warn(
         "Fetch Job By ID Warning:",
@@ -180,12 +151,7 @@ export const fetchCompanyJobApplicants = async (companyToken) => {
       headers: { Authorization: `Bearer ${companyToken}` },
     });
 
-    console.log("Fetch Company Job Applicants API Response:", data);
-
-    if (data?.success) {
-      // toast.success(data?.message);
-      console.log("Fetch Company Job Applicants Success:", data?.message);
-    } else {
+    if (!data?.success) {
       toast.warn(data?.message || "Company applicants fetched with warnings.");
       console.warn(
         "Fetch Company Job Applicants Warning:",

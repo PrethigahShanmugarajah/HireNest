@@ -1,4 +1,3 @@
-// Client / src / pages / client / Applications / View / Applications.jsx
 import { useCallback, useEffect, useState } from "react";
 import { useAppContext } from "../../../../context/AppContext";
 import { useAuth } from "@clerk/clerk-react";

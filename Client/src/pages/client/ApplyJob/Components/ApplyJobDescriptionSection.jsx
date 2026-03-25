@@ -1,4 +1,3 @@
-// Client / src / pages / client / ApplyJob / Components / ApplyJobDescriptionSection.jsx
 import Button from "../../../../components/Button";
 import { ClipLoader } from "react-spinners";
 

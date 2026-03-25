@@ -1,4 +1,3 @@
-// Server / config / multer.js
 import multer from "multer";
 
 const storage = multer.diskStorage({});

@@ -1,4 +1,3 @@
-// Client / src / components / client / Navbar.jsx
 import { Logo } from "../../assets/assets";
 import Button from "../Button";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";

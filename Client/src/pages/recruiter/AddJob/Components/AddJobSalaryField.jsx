@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / AddJob / Components / AddJobSalaryField.jsx
 import { InputField } from "../../../../components/FormField/InputField";
 import { useAppContext } from "../../../../context/AppContext";
 

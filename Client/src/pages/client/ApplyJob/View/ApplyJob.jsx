@@ -1,4 +1,3 @@
-// Client / src / pages / client / ApplyJob / View / ApplyJob.jsx
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../../../context/AppContext";
 import { useParams } from "react-router-dom";

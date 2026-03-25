@@ -1,5 +1,3 @@
-// Client / src / pages / recruiter / AddJob / Components / AddJobDescriptionEditor.jsx
-
 const AddJobDescriptionEditor = ({ editorRef }) => {
   return (
     <div className="w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-3xl">

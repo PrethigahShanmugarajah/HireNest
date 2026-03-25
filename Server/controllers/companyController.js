@@ -1,4 +1,3 @@
-// Server / controllers / companyController.js
 import Company from "../models/Company.js";
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
@@ -11,13 +10,6 @@ export const registerCompany = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const imageFile = req.file;
-
-    // if (!name || !email || !password || !imageFile) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Name, email, password, and company image are required.",
-    //   });
-    // }
 
     if (!name) {
       return res.status(400).json({
@@ -101,7 +93,6 @@ export const registerCompany = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    // const imageUpload = await cloudinary.uploader.upload(imageFile.path);
     const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
       folder: "HireNest/Companies",
     });
@@ -142,13 +133,6 @@ export const registerCompany = async (req, res) => {
 export const loginCompany = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // if (!email || !password) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Email and password are required.",
-    //   });
-    // }
 
     if (!email) {
       return res.status(400).json({
@@ -234,13 +218,6 @@ export const postJob = async (req, res) => {
   try {
     const { title, description, location, category, level, salary } = req.body;
     const companyId = req.company._id;
-
-    // if (!title || !description || !location || !category || !level || !salary) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "All job details are required to create a job posting.",
-    //   });
-    // }
 
     if (!title) {
       return res.status(400).json({
@@ -456,10 +433,6 @@ export const changeVisibility = async (req, res) => {
         message: "The requested job could not be found.",
       });
     }
-
-    // if (companyId.toString() === job.companyId.toString()) {
-    //   job.visible = !job.visible;
-    // }
 
     if (companyId.toString() !== job.companyId.toString()) {
       return res.status(403).json({

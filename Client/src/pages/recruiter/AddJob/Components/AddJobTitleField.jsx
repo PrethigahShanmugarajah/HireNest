@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / AddJob / Components / AddJobTitleField.jsx
 import { InputField } from "../../../../components/FormField/InputField";
 
 const AddJobTitleField = ({ title, setTitle }) => {

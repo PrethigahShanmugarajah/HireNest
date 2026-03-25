@@ -1,4 +1,3 @@
-// Client / src / services / mutations.js
 import { toast } from "react-toastify";
 import API_ROUTES from "../api/api_route";
 import api from "../api/axios";
@@ -7,11 +6,9 @@ import api from "../api/axios";
 export const registerCompany = async (formData) => {
   try {
     const { data } = await api.post(API_ROUTES.COMPANY.REGISTER, formData);
-    console.log("Register Company API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Register Company Success:", data?.message);
     } else {
       toast.warn(
         data?.message || "Company registration completed with warnings.",
@@ -35,11 +32,9 @@ export const registerCompany = async (formData) => {
 export const loginCompany = async (payload) => {
   try {
     const { data } = await api.post(API_ROUTES.COMPANY.LOGIN, payload);
-    console.log("Login Company API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Login Company Success:", data?.message);
     } else {
       toast.warn(data?.message || "Company login completed with warnings.");
       console.warn(
@@ -64,11 +59,8 @@ export const postJob = async (jobData, companyToken) => {
       headers: { Authorization: `Bearer ${companyToken}` },
     });
 
-    console.log("Post Job API Response:", data);
-
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Post Job Success:", data?.message);
     } else {
       toast.warn(data?.message || "Post job with warning");
       console.warn("Post Job Warning:", data?.message || "Post Job Warning");
@@ -91,11 +83,9 @@ export const changeJobVisibility = async (id, companyToken) => {
       {},
       { headers: { Authorization: `Bearer ${companyToken}` } },
     );
-    console.log("Change Job Visibility API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Change Job Visibility Success:", data?.message);
     } else {
       toast.warn(data?.message || "Change job visibility with warning");
       console.warn(
@@ -119,11 +109,9 @@ export const deleteJob = async (id, companyToken) => {
     const { data } = await api.delete(API_ROUTES.COMPANY.DELETE_JOB(id), {
       headers: { Authorization: `Bearer ${companyToken}` },
     });
-    console.log("Delete Job API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Delete Job Success:", data?.message);
     } else {
       toast.warn(data?.message || "Delete job with warning");
       console.warn(
@@ -147,11 +135,9 @@ export const updateJob = async (id, jobData, companyToken) => {
     const { data } = await api.put(API_ROUTES.COMPANY.UPDATE_JOB(id), jobData, {
       headers: { Authorization: `Bearer ${companyToken}` },
     });
-    console.log("Update Job API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Update Job Success:", data?.message);
     } else {
       toast.warn(data?.message || "Update job with warning");
       console.warn(
@@ -177,11 +163,9 @@ export const applyJob = async (jobId, token) => {
       { jobId },
       { headers: { Authorization: `Bearer ${token}` } },
     );
-    console.log("Apply Job API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Apply Job Success:", data?.message);
     } else {
       toast.warn(data?.message || "Apply job with warning");
       console.warn("Apply Job Warning:", data?.message || "Apply Job Warning");
@@ -205,11 +189,9 @@ export const updateUserResume = async (resume, token) => {
     const { data } = await api.patch(API_ROUTES.USERS.RESUME, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Update User Resume API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Update User Resume Success:", data?.message);
     } else {
       toast.warn(data?.message || "Update user resume with warning");
       console.warn(
@@ -235,11 +217,9 @@ export const changeJobApplicationStatus = async (companyToken, id, status) => {
       {},
       { headers: { Authorization: `Bearer ${companyToken}` } },
     );
-    console.log("Change Job Application Status API Response:", data);
 
     if (data?.success) {
       toast.success(data?.message);
-      console.log("Change Job Application Status Success:", data?.message);
     } else {
       toast.warn(data?.message || "Change job application status with warning");
       console.warn(

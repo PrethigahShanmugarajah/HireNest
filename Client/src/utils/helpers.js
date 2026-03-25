@@ -1,5 +1,3 @@
-// Client / src / utils / helpers.js
-
 /* -------- Format text (capitalize words & clean symbols) -------- */
 export const formatText = (name = "") => {
   return String(name)

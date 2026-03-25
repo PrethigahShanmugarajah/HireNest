@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / ManageJobs / Components / ManageJobsTable.jsx
 import { ClipLoader } from "react-spinners";
 import { formatDate } from "../../../../utils/helpers";
 import { SingleCheckboxField } from "../../../../components/FormField/CheckboxField";

@@ -1,5 +1,3 @@
-// Client / src / data / jobData.js
-
 export const JobCategories = [
   "Programming",
   "Data Science",

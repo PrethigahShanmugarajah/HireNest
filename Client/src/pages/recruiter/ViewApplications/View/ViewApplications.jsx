@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / ViewApplications / View / ViewApplications.jsx
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../../../context/AppContext";
 import { formatText } from "../../../../utils/helpers";

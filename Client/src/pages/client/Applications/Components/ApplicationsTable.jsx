@@ -1,4 +1,3 @@
-// Client / src / pages / client / Applications / Components / ApplicationsTable.jsx
 import { formatDate } from "../../../../utils/helpers";
 import { Commet } from "react-loading-indicators";
 

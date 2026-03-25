@@ -1,4 +1,3 @@
-// Client / src / pages / client / Home / Components / Hero.jsx
 import { useRef } from "react";
 import Button from "../../../../components/Button";
 import { useAppContext } from "../../../../context/AppContext";

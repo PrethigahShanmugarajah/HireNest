@@ -1,4 +1,3 @@
-// Client / src / components / client / JobCard.jsx
 import Button from "../Button";
 import { useAppContext } from "../../context/AppContext";
 

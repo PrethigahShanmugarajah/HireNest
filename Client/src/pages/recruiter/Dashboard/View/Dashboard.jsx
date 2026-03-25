@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / Dashboard / View / Dashboard.jsx
 import { Outlet } from "react-router-dom";
 import { useAppContext } from "../../../../context/AppContext";
 import { Logo } from "../../../../assets/assets";

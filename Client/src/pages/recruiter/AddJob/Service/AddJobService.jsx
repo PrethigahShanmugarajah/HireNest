@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / AddJob / Service / AddJobService.jsx
 import { postJob, updateJob } from "../../../../services/mutations";
 
 export const postJobApi = async ({

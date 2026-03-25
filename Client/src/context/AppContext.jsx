@@ -1,4 +1,3 @@
-// Client / src / context / AppContext.jsx
 /* eslint-disable react-refresh/only-export-components */
 import {
   createContext,

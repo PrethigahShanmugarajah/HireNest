@@ -1,4 +1,3 @@
-// Server / routes / companyRouter.js
 import express from "express";
 import {
   changeJobApplicationStatus,

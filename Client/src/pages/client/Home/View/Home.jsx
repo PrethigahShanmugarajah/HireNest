@@ -1,5 +1,4 @@
-// Client / src / pages / client / Home / View / Home.jsx
-import AppDownload from "../Components/AppDownload";
+// import AppDownload from "../Components/AppDownload";
 import Hero from "../Components/Hero";
 import JobListing from "../Components/JobListing";
 
@@ -8,7 +7,7 @@ const Home = () => {
     <div>
       <Hero />
       <JobListing />
-      <AppDownload />
+      {/* <AppDownload /> */}
     </div>
   );
 };

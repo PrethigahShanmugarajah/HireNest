@@ -1,4 +1,3 @@
-// Client / src / components / recruiter / Sidebar.jsx
 import { FilePenLine, Home, PlusSquare, UserRoundCheck } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";

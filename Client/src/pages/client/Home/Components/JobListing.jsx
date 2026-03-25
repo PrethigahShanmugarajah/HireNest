@@ -1,4 +1,3 @@
-// Client / src / pages / client / Home / Components / JobListing.jsx
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../../../context/AppContext";
 import { X } from "lucide-react";

@@ -1,4 +1,3 @@
-// Client / src / pages / client / Home / Components / AppDownload.jsx
 import { App_Main_Image } from "../../../../assets/assets";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import Button from "../../../../components/Button";

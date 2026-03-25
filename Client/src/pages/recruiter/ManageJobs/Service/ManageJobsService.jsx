@@ -1,4 +1,3 @@
-// Client / src / pages / recruiter / ManageJobs / Service / ManageJobsService.jsx
 import { fetchCompanyPostedJobs } from "../../../../services/fetch";
 import { changeJobVisibility, deleteJob } from "../../../../services/mutations";
 
